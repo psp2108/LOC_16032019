@@ -119,5 +119,49 @@ END //
 
 #call get_sensetive_data("pratiksp");
 
-#########################################
+############################################################################################################
+## Student
 
+####### GET USER SENSETIVE DATA #########
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE update_student(
+IN _uid varchar(12),
+IN _name varchar(400),
+IN _age int,
+IN _physical_disability varchar(1000),
+IN _course int,
+IN _adhar_card varchar(12),
+IN _city int,
+IN _caste int,
+IN _caste_certificate varchar(1000),
+IN _resume_path varchar(1000),
+IN _income_certificate varchar(1000),
+IN _annual_income double,
+IN _dob datetime
+)
+
+BEGIN
+
+	DECLARE student_id int;
+    
+    set student_id = (select student_user from login_table where user_id = _uid);
+    
+    update student_profile set
+    name = _name,
+    age = _age,
+    physical_disability = _physical_disability,
+    course = _course,
+    adhar_number = _adhar_card,
+    city = _city,
+    caste = _caste,
+    caste_certificate = caste_certificate,
+    resume_path = _resume_path,
+    annual_income = _annual_income,
+    student_profile.income_certificte_path = _income_certificate,
+    dob = _dob
+    where student_profile.student_id = student_id;
+
+END //
+
+call update_student("pratiksp","Pratik Panchal","10",NULL,4,"998877665544",2,2,"C:/Caste Certificate","C/Resume","C:/Income Certificate",500000,"1998-08-21");

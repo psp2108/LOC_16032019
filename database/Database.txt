@@ -21,4 +21,4 @@ Login
     call get_sensetive_data("userid");
 
 Student
-    
+    call update_student("uid","name","age","Physical Disability",CourseID,"Adhar No",cityID,casteID,"{URL} Caste Certificate","{URL} Resume","{URL} Income Certificate",annual Income,"dob (yyyy-mm-dd)");
