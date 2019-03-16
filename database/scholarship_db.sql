@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0
+-- version 4.7.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 15, 2019 at 08:52 PM
--- Server version: 10.1.31-MariaDB
--- PHP Version: 7.2.4
+-- Generation Time: Mar 16, 2019 at 01:47 AM
+-- Server version: 10.1.26-MariaDB
+-- PHP Version: 7.1.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -21,6 +21,20 @@ SET time_zone = "+00:00";
 --
 -- Database: `scholarship_db`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `eligibility_criteria`
+--
+
+CREATE TABLE `eligibility_criteria` (
+  `criteria_id` int(11) NOT NULL,
+  `caste` int(11) NOT NULL,
+  `qualification` int(11) NOT NULL,
+  `qualification_score` int(11) NOT NULL,
+  `annual_income` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -60,6 +74,8 @@ CREATE TABLE `map_hobby` (
 CREATE TABLE `map_qualifications` (
   `self_id` int(11) NOT NULL,
   `qualification_id` int(11) NOT NULL,
+  `institute_or_name` varchar(1000) NOT NULL,
+  `other_achievement` varchar(1000) NOT NULL,
   `student_id` int(11) NOT NULL,
   `total_score` int(11) NOT NULL,
   `certificate_path` varchar(1000) NOT NULL
@@ -260,6 +276,14 @@ CREATE TABLE `student_profile` (
 --
 
 --
+-- Indexes for table `eligibility_criteria`
+--
+ALTER TABLE `eligibility_criteria`
+  ADD PRIMARY KEY (`criteria_id`),
+  ADD KEY `caste` (`caste`),
+  ADD KEY `qualification` (`qualification`);
+
+--
 -- Indexes for table `login_table`
 --
 ALTER TABLE `login_table`
@@ -387,117 +411,113 @@ ALTER TABLE `scholarship_table`
 ALTER TABLE `student_profile`
   ADD PRIMARY KEY (`student_id`),
   ADD KEY `city` (`city`),
-  ADD KEY `caste` (`caste`);
+  ADD KEY `caste` (`caste`),
+  ADD KEY `course` (`course`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
+-- AUTO_INCREMENT for table `eligibility_criteria`
+--
+ALTER TABLE `eligibility_criteria`
+  MODIFY `criteria_id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `map_hobby`
 --
 ALTER TABLE `map_hobby`
   MODIFY `self_id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `map_qualifications`
 --
 ALTER TABLE `map_qualifications`
   MODIFY `self_id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `map_scholarships`
 --
 ALTER TABLE `map_scholarships`
   MODIFY `self_id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `map_skills`
 --
 ALTER TABLE `map_skills`
   MODIFY `self_id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `master_caste`
 --
 ALTER TABLE `master_caste`
   MODIFY `caste_id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `master_city`
 --
 ALTER TABLE `master_city`
   MODIFY `city_id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `master_event`
 --
 ALTER TABLE `master_event`
   MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `master_hobby`
 --
 ALTER TABLE `master_hobby`
   MODIFY `hobby_id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `master_qualification`
 --
 ALTER TABLE `master_qualification`
   MODIFY `qualification_id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `master_scholarship`
 --
 ALTER TABLE `master_scholarship`
   MODIFY `scholarship_id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `master_sc_category`
 --
 ALTER TABLE `master_sc_category`
   MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `master_skill`
 --
 ALTER TABLE `master_skill`
   MODIFY `skill_id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `master_status`
 --
 ALTER TABLE `master_status`
   MODIFY `status_id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `operator_profile`
 --
 ALTER TABLE `operator_profile`
   MODIFY `operator_id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `organization_profile`
 --
 ALTER TABLE `organization_profile`
   MODIFY `organization_id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `scholarship_table`
 --
 ALTER TABLE `scholarship_table`
   MODIFY `scholarship_id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `student_profile`
 --
 ALTER TABLE `student_profile`
   MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `eligibility_criteria`
+--
+ALTER TABLE `eligibility_criteria`
+  ADD CONSTRAINT `eligibility_criteria_ibfk_1` FOREIGN KEY (`caste`) REFERENCES `master_caste` (`caste_id`),
+  ADD CONSTRAINT `eligibility_criteria_ibfk_2` FOREIGN KEY (`qualification`) REFERENCES `master_qualification` (`qualification_id`);
 
 --
 -- Constraints for table `login_table`
@@ -566,7 +586,8 @@ ALTER TABLE `scholarship_table`
 --
 ALTER TABLE `student_profile`
   ADD CONSTRAINT `student_profile_ibfk_1` FOREIGN KEY (`city`) REFERENCES `master_city` (`city_id`),
-  ADD CONSTRAINT `student_profile_ibfk_2` FOREIGN KEY (`caste`) REFERENCES `master_caste` (`caste_id`);
+  ADD CONSTRAINT `student_profile_ibfk_2` FOREIGN KEY (`caste`) REFERENCES `master_caste` (`caste_id`),
+  ADD CONSTRAINT `student_profile_ibfk_3` FOREIGN KEY (`course`) REFERENCES `master_qualification` (`qualification_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
