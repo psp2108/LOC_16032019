@@ -33,4 +33,12 @@ Operator
     call update_scholarship_details("uid",category,"Scholarship name","last date to apply","{url}",annual_income,casteID,eventID,qualificationID,Qualification Score,courseID);
 
 MasterRecords
+    call get_skills()
+    call get_scholarship_category()
+    call get_qualification()
+    call get_hobby()
+    call get_event()
+    call get_course()
+    call get_city()
+    call get_caste()
     
