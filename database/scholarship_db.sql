@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 16, 2019 at 01:47 AM
+-- Generation Time: Mar 16, 2019 at 07:28 AM
 -- Server version: 10.1.26-MariaDB
 -- PHP Version: 7.1.8
 
@@ -116,6 +116,18 @@ CREATE TABLE `master_caste` (
   `Caste` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `master_caste`
+--
+
+INSERT INTO `master_caste` (`caste_id`, `Caste`) VALUES
+(1, 'SC'),
+(2, 'ST'),
+(3, 'OBC'),
+(4, 'SBC'),
+(5, 'VJNT'),
+(6, 'Buddism');
+
 -- --------------------------------------------------------
 
 --
@@ -126,6 +138,49 @@ CREATE TABLE `master_city` (
   `city_id` int(11) NOT NULL,
   `Cities` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `master_city`
+--
+
+INSERT INTO `master_city` (`city_id`, `Cities`) VALUES
+(1, 'Mumbai'),
+(2, 'Pune'),
+(3, 'Nagpur'),
+(4, 'Nashik'),
+(5, 'Palghar'),
+(6, 'Aurangabad'),
+(7, 'Solapur'),
+(8, 'Dhule'),
+(9, 'Amravati'),
+(10, 'Nashik'),
+(11, 'Kolhapur'),
+(12, 'Nanded'),
+(13, 'Sangli'),
+(14, 'Thane'),
+(15, 'Akola'),
+(16, 'Latur'),
+(17, 'Ahmednagar'),
+(18, 'Jalgaon'),
+(19, 'Kolhapur'),
+(20, 'Chandrapur'),
+(21, 'Parbhani'),
+(22, 'Jalna'),
+(23, 'Jalgaon'),
+(24, 'Panvel'),
+(25, 'Panvel'),
+(26, 'Satara'),
+(27, 'Beed'),
+(28, 'Yavatmal'),
+(29, 'Nagpur'),
+(30, 'Gondia'),
+(31, 'Solapur'),
+(32, 'Amravati'),
+(33, 'Osmanabad'),
+(34, 'Nandurbar'),
+(35, 'Wardha'),
+(36, 'Latur'),
+(37, 'Wardha');
 
 -- --------------------------------------------------------
 
@@ -138,6 +193,20 @@ CREATE TABLE `master_event` (
   `events` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `master_event`
+--
+
+INSERT INTO `master_event` (`event_id`, `events`) VALUES
+(1, 'Chess Compedition'),
+(2, 'Carrom Compedition'),
+(3, 'Cubing Compedition'),
+(4, 'Cricket Match'),
+(5, 'Paper Presentation'),
+(6, 'Dance Compedition'),
+(7, 'Singing Compedition'),
+(8, 'Quiz Round on Bollywood');
+
 -- --------------------------------------------------------
 
 --
@@ -148,6 +217,21 @@ CREATE TABLE `master_hobby` (
   `hobby_id` int(11) NOT NULL,
   `hobbies` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `master_hobby`
+--
+
+INSERT INTO `master_hobby` (`hobby_id`, `hobbies`) VALUES
+(1, 'Chess'),
+(2, 'Cubing'),
+(3, 'Carrom'),
+(4, 'Reading'),
+(5, 'Writing'),
+(6, 'Dancing'),
+(7, 'Singing'),
+(8, 'Listening to Musics'),
+(9, 'Watching Movies');
 
 -- --------------------------------------------------------
 
@@ -160,6 +244,33 @@ CREATE TABLE `master_qualification` (
   `qualifications` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `master_qualification`
+--
+
+INSERT INTO `master_qualification` (`qualification_id`, `qualifications`) VALUES
+(1, 'SSC'),
+(2, 'JEE'),
+(3, 'CET'),
+(4, 'GATE'),
+(5, 'GRE'),
+(6, 'Diploma Sem 1'),
+(7, 'Diploma Sem 2'),
+(8, 'Diploma Sem 3'),
+(9, 'Diploma Sem 4'),
+(10, 'Diploma Sem 5'),
+(11, 'Diploma Sem 6'),
+(12, 'Diploma Sem 7'),
+(13, 'Diploma Sem 8'),
+(14, 'Degree sem 1'),
+(15, 'Degree sem 2'),
+(16, 'Degree sem 3'),
+(17, 'Degree sem 4'),
+(18, 'Degree sem 5'),
+(19, 'Degree sem 6'),
+(20, 'Degree sem 7'),
+(21, 'Degree sem 8');
+
 -- --------------------------------------------------------
 
 --
@@ -169,6 +280,7 @@ CREATE TABLE `master_qualification` (
 CREATE TABLE `master_scholarship` (
   `scholarship_id` int(11) NOT NULL,
   `scholarships` varchar(500) NOT NULL,
+  `amount` double NOT NULL,
   `category` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -194,6 +306,23 @@ CREATE TABLE `master_skill` (
   `skills` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `master_skill`
+--
+
+INSERT INTO `master_skill` (`skill_id`, `skills`) VALUES
+(1, 'Java'),
+(2, 'Advance Java'),
+(3, 'Python'),
+(4, 'Advance Python'),
+(5, 'MySql'),
+(6, 'MongoDB'),
+(7, 'Machine LEarning'),
+(8, 'Photoshop'),
+(9, 'Video Editing'),
+(10, 'Graphics Designing'),
+(11, 'Animation');
+
 -- --------------------------------------------------------
 
 --
@@ -204,6 +333,15 @@ CREATE TABLE `master_status` (
   `status_id` int(11) NOT NULL,
   `status` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `master_status`
+--
+
+INSERT INTO `master_status` (`status_id`, `status`) VALUES
+(1, 'Pending'),
+(2, 'Approved'),
+(3, 'Rejected');
 
 -- --------------------------------------------------------
 
@@ -216,6 +354,13 @@ CREATE TABLE `operator_profile` (
   `name` varchar(500) NOT NULL,
   `city` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `operator_profile`
+--
+
+INSERT INTO `operator_profile` (`operator_id`, `name`, `city`) VALUES
+(1, 'Neel Patel', 1);
 
 -- --------------------------------------------------------
 
@@ -230,6 +375,15 @@ CREATE TABLE `organization_profile` (
   `total_events` int(11) NOT NULL,
   `city` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `organization_profile`
+--
+
+INSERT INTO `organization_profile` (`organization_id`, `name`, `total_scholarships`, `total_events`, `city`) VALUES
+(4, 'L & T Build India Scholarship', 0, 0, 1),
+(5, 'NDDC Scholarships', 0, 0, 2),
+(6, 'SGPC Cambridge Scholarship', 0, 0, 6);
 
 -- --------------------------------------------------------
 
@@ -257,18 +411,21 @@ CREATE TABLE `scholarship_table` (
 
 CREATE TABLE `student_profile` (
   `student_id` int(11) NOT NULL,
-  `name` varchar(400) NOT NULL,
-  `age` int(11) NOT NULL,
+  `name` varchar(400) DEFAULT NULL,
+  `age` int(11) DEFAULT NULL,
+  `physical_disability` varchar(1000) DEFAULT NULL,
   `course` int(11) NOT NULL,
   `total_hobbies` int(11) NOT NULL,
   `total_skills` int(11) NOT NULL,
   `adhar_number` varchar(12) NOT NULL,
   `city` int(11) NOT NULL,
   `caste` int(11) NOT NULL,
+  `caste_certificate` varchar(1000) NOT NULL,
   `resume_path` varchar(1000) NOT NULL,
   `annual_income` double NOT NULL,
   `income_certificte_path` varchar(1000) NOT NULL,
-  `dob` date NOT NULL
+  `dob` date NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -447,27 +604,27 @@ ALTER TABLE `map_skills`
 -- AUTO_INCREMENT for table `master_caste`
 --
 ALTER TABLE `master_caste`
-  MODIFY `caste_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `caste_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `master_city`
 --
 ALTER TABLE `master_city`
-  MODIFY `city_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `city_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 --
 -- AUTO_INCREMENT for table `master_event`
 --
 ALTER TABLE `master_event`
-  MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `master_hobby`
 --
 ALTER TABLE `master_hobby`
-  MODIFY `hobby_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `hobby_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `master_qualification`
 --
 ALTER TABLE `master_qualification`
-  MODIFY `qualification_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `qualification_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 --
 -- AUTO_INCREMENT for table `master_scholarship`
 --
@@ -482,22 +639,22 @@ ALTER TABLE `master_sc_category`
 -- AUTO_INCREMENT for table `master_skill`
 --
 ALTER TABLE `master_skill`
-  MODIFY `skill_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `skill_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `master_status`
 --
 ALTER TABLE `master_status`
-  MODIFY `status_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `status_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `operator_profile`
 --
 ALTER TABLE `operator_profile`
-  MODIFY `operator_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `operator_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `organization_profile`
 --
 ALTER TABLE `organization_profile`
-  MODIFY `organization_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `organization_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `scholarship_table`
 --
@@ -507,7 +664,7 @@ ALTER TABLE `scholarship_table`
 -- AUTO_INCREMENT for table `student_profile`
 --
 ALTER TABLE `student_profile`
-  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- Constraints for dumped tables
 --
@@ -587,7 +744,7 @@ ALTER TABLE `scholarship_table`
 ALTER TABLE `student_profile`
   ADD CONSTRAINT `student_profile_ibfk_1` FOREIGN KEY (`city`) REFERENCES `master_city` (`city_id`),
   ADD CONSTRAINT `student_profile_ibfk_2` FOREIGN KEY (`caste`) REFERENCES `master_caste` (`caste_id`),
-  ADD CONSTRAINT `student_profile_ibfk_3` FOREIGN KEY (`course`) REFERENCES `master_qualification` (`qualification_id`);
+  ADD CONSTRAINT `student_profile_ibfk_3` FOREIGN KEY (`course`) REFERENCES `master_course` (`course_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
