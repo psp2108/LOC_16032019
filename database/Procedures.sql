@@ -300,7 +300,6 @@ BEGIN
     
     insert into master_scholarship (scholarships, category) values (scholarship_name,categoryID);
     set _scholarship_id = (select scholarship_id from master_scholarship order by scholarship_id desc limit 1);
-	select _scholarship_id;
 
     if categoryID=1 THEN 
     	insert into eligibility_criteria (annual_income,organization,scholarship) values 
@@ -448,4 +447,4 @@ BEGIN
 
 END //
 
-#call get_skills()
+call get_skills()
