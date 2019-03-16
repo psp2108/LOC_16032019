@@ -1,0 +1,13 @@
+
+Services
+1. Insert Scholarship
+2. Insert Event
+3. Insert Student
+4. Insert Org
+5. Insert Operator
+6. Match Right Scholarship
+7. Chatbot
+8. Get orgs scholarships
+9. Get All scholarships
+10. Get student's event
+11. Search Scholarship
