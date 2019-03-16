@@ -12,3 +12,8 @@ Services
 9. Get All scholarships
 10. Get student's event
 11. Search Scholarship
+
+===================Procedures List======================
+Login
+    -credential_check(uid,pwd)
+    
