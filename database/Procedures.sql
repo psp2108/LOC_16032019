@@ -275,7 +275,7 @@ BEGIN
 	
 END //
 
-call get_eligible_scholarships("pratiksp");
+#call get_eligible_scholarships("pratiksp");
 
 
 ############################################################################################################
