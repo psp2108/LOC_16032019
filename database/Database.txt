@@ -22,3 +22,5 @@ Login
 
 Student
     call update_student("uid","name","age","Physical Disability",CourseID,"Adhar No",cityID,casteID,"{URL} Caste Certificate","{URL} Resume","{URL} Income Certificate",annual Income,"dob (yyyy-mm-dd)");
+    call add_skills("uid",skillID);
+    call add_hobby("uid",hobbyID);

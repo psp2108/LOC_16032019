@@ -122,7 +122,7 @@ END //
 ############################################################################################################
 ## Student
 
-####### GET USER SENSETIVE DATA #########
+####### UPDATE STUDENT PROFILE #########
 
 DELIMITER //
 CREATE OR REPLACE PROCEDURE update_student(
@@ -165,3 +165,53 @@ BEGIN
 END //
 
 call update_student("pratiksp","Pratik Panchal","10",NULL,4,"998877665544",2,2,"C:/Caste Certificate","C/Resume","C:/Income Certificate",500000,"1998-08-21");
+
+####### ADD STUDENT HOBBIES #########
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE add_hobby(
+IN _uid varchar(12),
+IN hobbyID int
+)
+
+BEGIN
+
+	DECLARE student_id int;
+    DECLARE count int;
+
+    set student_id = (select student_user from login_table where user_id = _uid);
+    set count = (select count(*) from map_hobby where map_hobby.student_id = student_id and map_hobby.hobby_id = hobbyID);
+
+    if count = 0 THEN
+        insert into map_hobby (map_hobby.student_id, map_hobby.hobby_id) values (student_id, hobbyID);
+    end if;
+
+
+END //
+
+#call add_hobby("pratiksp",1);
+
+####### ADD STUDENT SKILLS #########
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE add_skills(
+IN _uid varchar(12),
+IN SkillID int
+)
+
+BEGIN
+
+	DECLARE student_id int;
+    DECLARE count int;
+
+    set student_id = (select student_user from login_table where user_id = _uid);
+    set count = (select count(*) from map_skills where map_skills.student_id = student_id and map_skills.skill_id = SkillID);
+
+    if count = 0 THEN
+        insert into map_skills (map_skills.student_id, map_skills.skill_id) values (student_id, SkillID);
+    end if;
+
+
+END //
+
+#call add_skills("pratiksp",1);
