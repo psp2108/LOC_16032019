@@ -1,0 +1,5 @@
+call credential_check(sap, pwd)
+call show_app_status(sap)
+call request_application(sap, class)
+call status_change(rc_id, status_ip)
+call pending_status(status_ip)
