@@ -342,3 +342,110 @@ BEGIN
 END //
 
 call update_scholarship_details("org1",4,"Scholarship name","2020-01-01","https://www.url.com/",500000,3,2,-1,90,4);
+
+############################################################################################################
+## Masters
+
+####### GET CASTE #########
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE get_caste()
+
+BEGIN
+
+	select * from master_caste;
+
+END //
+
+#call get_caste()
+
+####### GET CITIES #########
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE get_city()
+
+BEGIN
+
+	select * from master_city;
+
+END //
+
+#call get_city()
+
+####### GET COURSE #########
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE get_course()
+
+BEGIN
+
+	select course_id, CONCAT(main_course, " - ", sub_course, " (year ", course_year, ")") from master_course;
+
+END //
+
+#call get_course()
+
+####### GET EVENT #########
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE get_event()
+
+BEGIN
+
+	select * from master_event;
+
+END //
+
+#call get_event()
+
+####### GET HOBBY #########
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE get_hobby()
+
+BEGIN
+
+	select * from master_hobby;
+
+END //
+
+#call get_hobby()
+
+####### GET QUALIFICATION #########
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE get_qualification()
+
+BEGIN
+
+	SELECT * FROM master_qualification;
+
+END //
+
+#call get_qualification()
+
+####### GET SCHOLARSHIP CATEGORY #########
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE get_scholarship_category()
+
+BEGIN
+
+	SELECT * FROM master_sc_category;
+
+END //
+
+#call get_scholarship_category()
+
+####### GET SKILLS #########
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE get_skills()
+
+BEGIN
+
+	SELECT * FROM master_skill;
+
+END //
+
+#call get_skills()

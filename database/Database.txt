@@ -31,3 +31,6 @@ Organization
 Operator
     call update_operator("uid","Operator Name",cityID)
     call update_scholarship_details("uid",category,"Scholarship name","last date to apply","{url}",annual_income,casteID,eventID,qualificationID,Qualification Score,courseID);
+
+MasterRecords
+    
