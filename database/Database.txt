@@ -24,9 +24,11 @@ Student
     call update_student("uid","name","age","Gender","Physical Disability",CourseID,"Adhar No",cityID,casteID,"{URL} Caste Certificate","{URL} Resume","{URL} Income Certificate",annual Income,"dob (yyyy-mm-dd)");
     call add_skills("uid",skillID);
     call add_hobby("uid",hobbyID);
+    call get_eligible_scholarships(uid);
 
 Organization
     call update_organizer("uid","Organization Name",cityID)
+    call get_eligible_students(uid)
 
 Operator
     call update_operator("uid","Operator Name",cityID)

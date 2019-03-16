@@ -218,6 +218,23 @@ END //
 
 #call add_skills("pratiksp",1);
 
+####### GET ELIGIBLE SCHOLARSHIPS #########
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE get_eligible_scholarships(
+IN _uid varchar(12)
+)
+
+BEGIN
+	DECLARE student_id int;
+
+    set student_id = (select student_user from login_table where user_id = _uid);
+
+END //
+
+#call get_eligible_scholarships("pratiksp");
+
+
 ############################################################################################################
 ## Organization
 
