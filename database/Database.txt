@@ -28,7 +28,7 @@ Student
 
 Organization
     call update_organizer("uid","Organization Name",cityID)
-    call get_eligible_students(uid)
+    call get_eligible_students(uid) -Pending
 
 Operator
     call update_operator("uid","Operator Name",cityID)
