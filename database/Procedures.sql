@@ -128,8 +128,8 @@ DELIMITER //
 CREATE OR REPLACE PROCEDURE update_student(
 IN _uid varchar(12),
 IN _name varchar(400),
-IN _age int,\
-IN _gender varchar()
+IN _age int,
+IN _gender varchar(10),
 IN _physical_disability varchar(1000),
 IN _course int,
 IN _adhar_card varchar(12),
@@ -166,7 +166,7 @@ BEGIN
 
 END //
 
-call update_student("pratiksp","Pratik Panchal","10","Male",NULL,4,"998877665544",2,2,"C:/Caste Certificate","C/Resume","C:/Income Certificate",500000,"1998-08-21");
+#call update_student("pratiksp","Pratik Panchal","10","Male",NULL,4,"998877665544",2,2,"C:/Caste Certificate","C/Resume","C:/Income Certificate",500000,"1998-08-21");
 
 ####### ADD STUDENT HOBBIES #########
 
@@ -217,3 +217,57 @@ BEGIN
 END //
 
 #call add_skills("pratiksp",1);
+
+############################################################################################################
+## Organization
+
+####### UPDATE Organization PROFILE #########
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE update_organizer(
+IN _uid varchar(12),
+IN _name varchar(1000),
+IN _city int
+)
+
+BEGIN
+
+	DECLARE organization_id int;
+    
+    set organization_id = (select organizer_user from login_table where user_id = _uid);
+    
+    update organization_profile set
+    name = _name,
+    city = _city
+    where organization_profile.organization_id = organization_id;
+
+END //
+
+#call update_organizer("pratiksp","Organization Name",4);
+
+############################################################################################################
+## Operator
+
+####### UPDATE Operator PROFILE #########
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE update_operator(
+IN _uid varchar(12),
+IN _name varchar(1000),
+IN _city int
+)
+
+BEGIN
+
+	DECLARE operator_id int;
+    
+    set operator_id = (select operator_user from login_table where user_id = _uid);
+    
+    update operator_profile set
+    name = _name,
+    city = _city
+    where operator_profile.operator_id = operator_id;
+
+END //
+
+#call update_operator("pratiksp","Operator Name",4);
