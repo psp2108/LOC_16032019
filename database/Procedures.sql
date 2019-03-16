@@ -128,7 +128,8 @@ DELIMITER //
 CREATE OR REPLACE PROCEDURE update_student(
 IN _uid varchar(12),
 IN _name varchar(400),
-IN _age int,
+IN _age int,\
+IN _gender varchar()
 IN _physical_disability varchar(1000),
 IN _course int,
 IN _adhar_card varchar(12),
@@ -150,6 +151,7 @@ BEGIN
     update student_profile set
     name = _name,
     age = _age,
+    gender = _gender,
     physical_disability = _physical_disability,
     course = _course,
     adhar_number = _adhar_card,
@@ -164,7 +166,7 @@ BEGIN
 
 END //
 
-call update_student("pratiksp","Pratik Panchal","10",NULL,4,"998877665544",2,2,"C:/Caste Certificate","C/Resume","C:/Income Certificate",500000,"1998-08-21");
+call update_student("pratiksp","Pratik Panchal","10","Male",NULL,4,"998877665544",2,2,"C:/Caste Certificate","C/Resume","C:/Income Certificate",500000,"1998-08-21");
 
 ####### ADD STUDENT HOBBIES #########
 
