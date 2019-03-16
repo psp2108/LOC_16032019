@@ -230,6 +230,13 @@ BEGIN
 
     set student_id = (select student_user from login_table where user_id = _uid);
 
+    #1 Financial (get from stud table)
+    #2 Backward (get from stud table)
+    #3 Academics (get from stud table and map_qualification with qualifications)
+    #4 Others (map_events)
+
+    
+
 END //
 
 #call get_eligible_scholarships("pratiksp");

@@ -20,4 +20,4 @@ def send_email(user, pwd, recipient, subject, body):
     except Exception as e: 
         print(e)
 
-send_email("pk.panchal.526@gmail.com", "itissecret", ["pratik.sp.1112@gmail.com"], "Test Subject", "Test Body")
+send_email("pk.panchal.526@gmail.com", "", ["pratik.sp.1112@gmail.com"], "Test Subject", "Test Body")
