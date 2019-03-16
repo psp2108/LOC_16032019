@@ -271,3 +271,74 @@ BEGIN
 END //
 
 #call update_operator("pratiksp","Operator Name",4);
+## Operator
+
+####### UPDATE SCHOLARSHIP DETAILS #########
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE update_scholarship_details(
+    IN _uid varchar(12),
+    IN categoryID int,
+    IN scholarship_name varchar(1000),
+    IN last_date datetime,
+    IN _url varchar(1000),
+    IN _annual_income double,
+    IN casteID int,
+    IN eventID int,
+    IN qualificationID int,
+    IN _qualification_score int,
+    IN courseID int
+)
+
+BEGIN
+
+    DECLARE _scholarship_id int;
+    DECLARE _eligibility_id int;
+	DECLARE organization_id int;
+    
+    set organization_id = (select organizer_user from login_table where user_id = _uid);
+    
+    insert into master_scholarship (scholarships, category) values (scholarship_name,categoryID);
+    set _scholarship_id = (select scholarship_id from master_scholarship order by scholarship_id desc limit 1);
+	select _scholarship_id;
+
+    if categoryID=1 THEN 
+    	insert into eligibility_criteria (annual_income,organization,scholarship) values 
+        (_annual_income, organization_id, _scholarship_id);
+        #select "1";
+    end if;
+    if categoryID=2 THEN 
+    	insert into eligibility_criteria (caste,organization,scholarship) values 
+        (casteID, organization_id, _scholarship_id);
+        #select "2";
+    end if;
+    if categoryID=3 THEN 
+    	insert into eligibility_criteria (events,organization,scholarship) values 
+        (eventID, organization_id, _scholarship_id);
+        #select "3";
+    end if;
+    if categoryID=4 THEN 
+    	if qualificationID != -1 and courseId != -1 THEN
+    		insert into eligibility_criteria (qualification,qualification_score,upcomming_course,organization,scholarship) 
+            values (qualificationID,_qualification_score,courseID,organization_id,_scholarship_id);
+        end if;
+    	if courseId != -1 THEN
+    		insert into eligibility_criteria (upcomming_course,organization,scholarship) values (courseID, organization_id, _scholarship_id);
+        end if;
+    	if qualificationID != -1 THEN
+    		insert into eligibility_criteria (qualification,qualification_score,organization,scholarship) 
+            values (qualificationID,_qualification_score, organization_id, _scholarship_id);
+        end if;
+        
+        #select "4";
+    end if;
+	
+    set _eligibility_id = (select criteria_id from eligibility_criteria order by criteria_id desc limit 1);
+    
+    insert into scholarship_table (name,organization,last_date_to_apply,url_site,scholarship,eligibility) 
+    values (scholarship_name,organization_id,last_date,_url,_scholarship_id,_eligibility_id);
+    
+
+END //
+
+call update_scholarship_details("org1",4,"Scholarship name","2020-01-01","https://www.url.com/",500000,3,2,-1,90,4);
