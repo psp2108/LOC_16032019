@@ -15,5 +15,10 @@ Services
 
 ===================Procedures List======================
 Login
-    -credential_check(uid,pwd)
+    call credential_check("user id","password")
+    call register_user("userid","password","email","xxxxxxxxxx", "Name","User Type code");
+    call change_login_detail("userid","old password","newpassword","email","xxxxxxxxxx");
+    call get_sensetive_data("userid");
+
+Student
     
