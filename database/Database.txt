@@ -31,6 +31,8 @@ Organization
     call update_organizer("uid","Organization Name",cityID)
     call get_eligible_students(uid) -Pending
     -call update_scholarship_details("uid",category,"Scholarship name","last date to apply","{url}",annual_income,casteID,eventID,qualificationID,Qualification Score,courseID);
+    view_scholarships(orgid)
+    get_scholarship(schid)
 
 Operator
     call update_operator("uid","Operator Name",cityID)

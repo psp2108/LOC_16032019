@@ -60,7 +60,7 @@ BEGIN
         set TYPE_ID = (select student_id from student_profile order by student_id desc limit 1);
         
         insert into login_table (user_id,password,email,phone_no,student_user) values (_uid, _pwd, email, phone, TYPE_ID);
-        update login_table set student_user = TYPE_ID;
+        update login_table set student_user = TYPE_ID where user_id = _uid;
     	SELECT "STUDENT",user_id from login_table where user_id = _uid;
     ELSE 
         IF (type = 1) THEN
@@ -567,3 +567,141 @@ BEGIN
 END //
 
 #call inspect_scholarship(12,3)
+
+####################################################
+
+##### VIEW SCHOLARSHIP
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE view_scholarships(
+IN org_id int
+)
+
+BEGIN
+	
+    if (select count(*) from scholarship_table where scholarship_table.organization = org_id) > 0 then
+        select scholarship_table.name, scholarship_table.url_site from 
+        organization_profile, scholarship_table where 
+        scholarship_table.organization = organization_profile.organization_id AND
+        organization_profile.organization_id = org_id;
+    ELSE
+    	select "";
+    end if;
+
+END //
+
+call view_scholarships(5)
+
+##### GET SCHOLARSHIP
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE get_scholarship(
+IN sch_id int
+)
+
+BEGIN
+
+
+	DECLARE _cat int;
+    set _cat = (select master_sc_category.category_id from master_sc_category, master_scholarship, scholarship_table where scholarship_table.scholarship = master_scholarship.scholarship_id and master_scholarship.category = master_sc_category.category_id limit 1);
+
+    
+    if _cat = 1 THEN
+    
+        select master_sc_category.categories,
+        master_scholarship.scholarships,
+        scholarship_table.url_site,
+        scholarship_table.last_date_to_apply,
+        CONCAT("Income < ",eligibility_criteria.annual_income)
+
+        from 
+        master_sc_category,master_scholarship,
+        scholarship_table,eligibility_criteria
+
+        where
+        master_sc_category.category_id = master_scholarship.category AND
+        master_scholarship.scholarship_id = scholarship_table.scholarship AND
+        eligibility_criteria.annual_income != 0 AND
+        eligibility_criteria.annual_income is not NULL and
+        scholarship_table.scholarship_id = sch_id;
+    end if;
+   
+    if _cat = 2 THEN
+        select 
+        master_sc_category.categories,
+        master_scholarship.scholarships,
+        scholarship_table.url_site,
+        scholarship_table.last_date_to_apply,
+        master_caste.Caste
+
+        from 
+        master_sc_category,master_scholarship,
+        scholarship_table,eligibility_criteria,
+        master_caste
+
+        where
+        master_sc_category.category_id = master_scholarship.category AND
+        master_scholarship.scholarship_id = scholarship_table.scholarship AND
+        #eligibility_criteria.scholarship = scholarship_table.scholarship_id AND
+        eligibility_criteria.caste = master_caste.caste_id AND
+        eligibility_criteria.caste != 0 AND
+        eligibility_criteria.caste is not NULL and
+        scholarship_table.scholarship_id = sch_id;
+    
+    end if;
+    
+   if _cat = 3 THEN
+   		select 
+        master_sc_category.categories,
+        master_scholarship.scholarships,
+        scholarship_table.url_site,
+        scholarship_table.last_date_to_apply,
+        master_course.sub_course,
+        master_qualification.qualifications
+
+        from 
+        master_sc_category,master_scholarship,
+        scholarship_table,eligibility_criteria,
+        master_course, master_qualification
+
+        where
+        master_sc_category.category_id = master_scholarship.category AND
+        master_scholarship.scholarship_id = scholarship_table.scholarship AND
+        eligibility_criteria.upcomming_course = master_course.course_id AND
+        eligibility_criteria.upcomming_course != 0 AND
+        eligibility_criteria.upcomming_course is not NULL and
+        eligibility_criteria.qualification = master_qualification.qualification_id and
+        eligibility_criteria.qualification != 0 AND
+        eligibility_criteria.qualification is not NULL and
+        scholarship_table.scholarship_id = sch_id;
+   end if;
+  
+  if _cat = 4 then 
+   		
+        select 
+        master_sc_category.categories,
+        master_scholarship.scholarships,
+        scholarship_table.url_site,
+        scholarship_table.last_date_to_apply,
+        master_event.events
+
+        from 
+        master_sc_category,master_scholarship,
+        scholarship_table,eligibility_criteria,
+        master_event
+
+        where
+        master_sc_category.category_id = master_scholarship.category AND
+        master_scholarship.scholarship_id = scholarship_table.scholarship AND
+        #eligibility_criteria.scholarship = scholarship_table.scholarship_id AND
+        eligibility_criteria.events = master_event.event_id AND
+        eligibility_criteria.events != 0 AND
+        eligibility_criteria.events is not NULL and
+        scholarship_table.scholarship_id = sch_id;
+  
+  end if;
+
+END //
+
+call get_scholarship(14);
+

@@ -98,7 +98,7 @@ def get_scholarship_category():
     #print(o)
     for i in o:
         d = {}
-        d['id'] = i[0]
+        d['schc_id'] = i[0]
         d['Scholarship Category'] = i[1]
         l.append(d)
     
@@ -110,7 +110,7 @@ def get_qualification():
     #print(o)
     for i in o:
         d = {}
-        d['id'] = i[0]
+        d['q_id'] = i[0]
         d['Qualification'] = i[1]
         l.append(d)
     
@@ -122,7 +122,7 @@ def get_hobby():
     #print(o)
     for i in o:
         d = {}
-        d['id'] = i[0]
+        d['h_id'] = i[0]
         d['Hobby'] = i[1]
         l.append(d)
     
@@ -134,7 +134,7 @@ def get_skills():
     #print(o)
     for i in o:
         d = {}
-        d['id'] = i[0]
+        d['s_id'] = i[0]
         d['Skills'] = i[1]
         l.append(d)
     
@@ -146,7 +146,7 @@ def get_event():
     #print(o)
     for i in o:
         d = {}
-        d['id'] = i[0]
+        d['e_id'] = i[0]
         d['Event'] = i[1]
         l.append(d)
     
@@ -158,7 +158,7 @@ def get_course():
     #print(o)
     for i in o:
         d = {}
-        d['id'] = i[0]
+        d['course_id'] = i[0]
         d['Course'] = i[1]
         l.append(d)
     
@@ -170,7 +170,7 @@ def get_city():
     #print(o)
     for i in o:
         d = {}
-        d['id'] = i[0]
+        d['city_id'] = i[0]
         d['City'] = i[1]
         l.append(d)
     
@@ -182,8 +182,47 @@ def get_caste():
     #print(o)
     for i in o:
         d = {}
-        d['id'] = i[0]
+        d['caste_id'] = i[0]
         d['Caste'] = i[1]
         l.append(d)
     
     return l
+
+def view_scholarships(oid):
+    l = []
+    o = connect_mysql.getDBCursor("view_scholarships",(oid,))
+    #print(o)
+    for i in o:
+        d = {}
+        d['name'] = i[0]
+        d['url'] = i[1]
+        l.append(d)
+    
+    return l
+'''
+        master_sc_category.categories,
+        master_scholarship.scholarships,
+        scholarship_table.url_site,
+        scholarship_table.last_date_to_apply,
+        master_course.sub_course,
+        master_qualification.qualifications
+'''
+
+def get_scholarship(sih):
+    l = []
+    o = connect_mysql.getDBCursor("get_caste",(sih,))
+    #print(o)
+    for i in o:
+        d = {}
+        d['Categories'] = i[0]
+        d['Scholarships'] = i[1]
+        d['URL'] = i[2]
+        d['Qualification'] = i[3]
+        try:
+            d['Score'] = i[4]
+        except:
+            print()
+        l.append(d)
+    
+    return l
+
