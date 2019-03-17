@@ -8,22 +8,38 @@ IN _pwd varchar(50)
 )
 
 BEGIN
+    DECLARE student int;
+    DECLARE operator int;
+    DECLARE organizer int;
 
     IF(select count(*) from login_table where 
        user_id=_uid AND password=_pwd) > 0 THEN 
-    
-    	SELECT "true";
+
+        set student = (select student_user from login_table where user_id = _uid);
+        set operator = (select operator_user from login_table where user_id = _uid);
+        set organizer = (select organizer_user from login_table where user_id = _uid);
+
+        if student is not null then 
+            select "True","0";
+        end if;
+        if operator is not null then 
+            select "True","2";
+        end if;
+        if organizer is not null then 
+            select "True","1";
+        end if;
     ELSE
     	SELECT "false";
     END IF;
 
 END //
 
-#call credential_check("pratiksp","1234")
+#call credential_check("pratiksp","12345")
 
 #########################################
 
 ####### REGISTER USER #########
+
 DELIMITER //
 CREATE OR REPLACE PROCEDURE register_user(
 IN _uid varchar(12),
@@ -43,31 +59,35 @@ BEGIN
         
         set TYPE_ID = (select student_id from student_profile order by student_id desc limit 1);
         
+        insert into login_table (user_id,password,email,phone_no,student_user) values (_uid, _pwd, email, phone, TYPE_ID);
         update login_table set student_user = TYPE_ID;
-    	SELECT "Student";
+    	SELECT "STUDENT",user_id from login_table where user_id = _uid;
     ELSE 
         IF (type = 1) THEN
             insert into organization_profile (name) values (_name);
 
             set TYPE_ID = (select organization_id from organization_profile order by organization_id desc limit 1);
 
-            #pdate login_table set organizer_user = TYPE_ID;
+            insert into login_table (user_id,password,email,phone_no,organizer_user) values (_uid, _pwd, email, phone, TYPE_ID);
 
-            SELECT "ORGANIZER";
+            SELECT "ORGANIZER",user_id from login_table where user_id = _uid;
         ELSE 
             IF (type = 2) THEN
                 insert into operator_profile (name) values (_name);
 
                 set TYPE_ID = (select operator_id from operator_profile order by operator_id desc limit 1);
 
-                update login_table set operator_user = TYPE_ID;
+                insert into login_table (user_id,password,email,phone_no,operator_user) values (_uid, _pwd, email, phone, TYPE_ID);
 
-                SELECT "OPERATOR";
+                SELECT 'OPERATOR',user_id from login_table where user_id = _uid;
+            ELSE
+                Select 'False';
             END IF;
         END IF;
     END IF;
 
 END //
+
 
 #call register_user("premb","1234","prembhajaj@gmail.com","8104461845", "Prem Bhajaj","2");
 
@@ -164,6 +184,8 @@ BEGIN
     dob = _dob
     where student_profile.student_id = student_id;
 
+    select "True";
+
 END //
 
 #call update_student("pratiksp","Pratik Panchal","10","Male",NULL,4,"998877665544",2,2,"C:/Caste Certificate","C/Resume","C:/Income Certificate",500000,"1998-08-21");
@@ -244,7 +266,7 @@ BEGIN
         master_scholarship.scholarships,
         scholarship_table.url_site,
         scholarship_table.last_date_to_apply
-        scho
+        -- scho
     from 
     eligibility_criteria,master_scholarship,organization_profile,student_profile,
     master_qualification,map_qualifications, master_sc_category, scholarship_table
@@ -400,7 +422,7 @@ BEGIN
 
 END //
 
-call update_scholarship_details("org1",4,"Scholarship name","2020-01-01","https://www.url.com/",500000,3,2,-1,90,4);
+#call update_scholarship_details("org1",4,"Scholarship name","2020-01-01","https://www.url.com/",500000,3,2,-1,90,4);
 
 ############################################################################################################
 ## Masters
@@ -507,4 +529,41 @@ BEGIN
 
 END //
 
-call get_skills()
+#call get_skills()
+
+##############################################################################
+
+###  INSPECT STUDENTS #####
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE inspect_student(
+IN id int,
+IN _status int
+)
+
+BEGIN
+
+	update student_profile set status = _status where student_id = id;
+    select "True";
+
+END //
+
+#call inspect_student(3,2);
+
+
+###  INSPECT SCHOLARSHIPS #####
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE inspect_scholarship(
+IN id int,
+IN _status int
+)
+
+BEGIN
+
+	update scholarship_table set status = _status where scholarship_id = id;
+    select "True";
+
+END //
+
+#call inspect_scholarship(12,3)

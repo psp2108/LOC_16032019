@@ -15,24 +15,25 @@ Services
 
 ===================Procedures List======================
 Login
-    call credential_check("user id","password")
-    call register_user("userid","password","email","xxxxxxxxxx", "Name","User Type code");
+    -call credential_check("user id","password")
+    -call register_user("userid","password","email","xxxxxxxxxx", "Name","User Type code");
     call change_login_detail("userid","old password","newpassword","email","xxxxxxxxxx");
     call get_sensetive_data("userid");
 
 Student
-    call update_student("uid","name","age","Gender","Physical Disability",CourseID,"Adhar No",cityID,casteID,"{URL} Caste Certificate","{URL} Resume","{URL} Income Certificate",annual Income,"dob (yyyy-mm-dd)");
+    call update_student("uid","name","age","Gender","Physical Disability",CourseID,"Adhar No",	cityID,casteID,"{URL} Caste Certificate","{URL} Resume","{URL} Income Certificate",	annual Income,"dob (yyyy-mm-dd)");
+	
     call add_skills("uid",skillID);
     call add_hobby("uid",hobbyID);
-    call get_eligible_scholarships(uid);
+    -call get_eligible_scholarships(uid);
 
 Organization
     call update_organizer("uid","Organization Name",cityID)
     call get_eligible_students(uid) -Pending
+    -call update_scholarship_details("uid",category,"Scholarship name","last date to apply","{url}",annual_income,casteID,eventID,qualificationID,Qualification Score,courseID);
 
 Operator
     call update_operator("uid","Operator Name",cityID)
-    call update_scholarship_details("uid",category,"Scholarship name","last date to apply","{url}",annual_income,casteID,eventID,qualificationID,Qualification Score,courseID);
 
 MasterRecords
     call get_skills()
@@ -43,4 +44,3 @@ MasterRecords
     call get_course()
     call get_city()
     call get_caste()
-    

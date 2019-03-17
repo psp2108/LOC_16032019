@@ -1,6 +1,7 @@
 from flask_restful import Resource
 from flask_restful import reqparse, abort, Api, Resource
 import logging as logger
+import procs
 
 class Login(Resource):
 
@@ -24,25 +25,12 @@ class Login(Resource):
 		logger.debug("Username: "+un+"Password: "+pw)
 
 		#Call Pratiks Method
-		dbResponse = loginDB(un,pw)
+		dbResponse = procs.check_credentials(un,pw)
 		if(dbResponse["status"]):
-			response = {"message":"true", "userID":str(dbResponse["userID"]), "type":dbResponse["userID"]}
+			response = {"message":"true", "userID":str(dbResponse["userID"]), "type":dbResponse["type"]}
 		else:
 			response = {"message":"false", "userID":"", "type":""}
 		return response,200
-
-	
-def loginDB(un,pw):
-	# access DB
-	
-	
-	#form Dict
-	dbResponse = {}
-	dbResponse["status"] = True
-	dbResponse["userID"] = 1
-	dbResponse["type"] = "Student"
-	return dbResponse
-
 
 #Get Parameters & Parse JSON
 #json_data = request.get_json(force=True)

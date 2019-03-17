@@ -1,6 +1,7 @@
 from flask_restful import Resource
 from flask_restful import reqparse, abort, Api, Resource
 import logging as logger
+import procs
 
 class Register(Resource):
 
@@ -25,14 +26,14 @@ class Register(Resource):
 		user = {}
 		user["un"] = args['username']
 		user["pw"] = args['password']
+		user["email"] = args['email']
+		user["phone"] = args['phone']
 		user["name"] = args['name']
 		user["typeName"] = args['type']
 		user["gender"] = args['gender']
-		user["email"] = args['email']
-		user["phone"] = args['phone']
 
 		#Call Pratiks Method
-		dbResponse = registerDB(user)
+		dbResponse = procs.register_student(user)
 		if(dbResponse["status"]):
 			response = dbResponse
 		else:
@@ -41,6 +42,7 @@ class Register(Resource):
 
 def registerDB(user):
 	# form Dict
+	print("=----------------In Register DB")
 	dbRequest = {}
 	dbRequest["status"] = False
 	dbRequest["uid"] = user["un"]

@@ -1,6 +1,7 @@
 from flask_restful import Resource
 from flask_restful import reqparse, abort, Api, Resource
 import logging as logger
+import procs
 
 class Profile(Resource):
 
@@ -12,9 +13,10 @@ class Profile(Resource):
 	def post(self):
 		logger.debug("Inside the POST Profile Creation Method ")
 		parser = reqparse.RequestParser()
-		parser.add_argument('id')
+		parser.add_argument('uid')
 		parser.add_argument('name')
 		parser.add_argument('age')
+		parser.add_argument('gender')
 		parser.add_argument('pd')
 		parser.add_argument('course')
 		parser.add_argument('total_h')
@@ -28,37 +30,38 @@ class Profile(Resource):
 		parser.add_argument('income_cert_no')
 		parser.add_argument('dob')
 		parser.add_argument('status')
+		parser.add_argument('skills')
+		parser.add_argument('hobby')
 
 		#Get parameters as POST parameters
 		args = parser.parse_args()
 		
 		#Prepare profile Data Dict
 		profileData = {}
-		#profileData['id'] = args['id']
+		profileData['uid'] = args['uid']
 		profileData['name'] = args['name']
 		profileData['age'] = args['age']
+		profileData['gender'] = args['gender']
 		profileData['pd'] = args['pd']
 		profileData['course'] = args['course']
-		profileData['total_h'] = args['total_h']
-		profileData['total_s'] = args['total_s']
 		profileData['adhar'] = args['adhar']
 		profileData['city'] = args['city']
 		profileData['caste'] = args['caste']
 		profileData['caste_cert'] = args['caste_cert']
 		profileData['resume'] = args['resume']
-		profileData['annual_income'] = args['annual_income']
 		profileData['income_cert_no'] = args['income_cert_no']
+		profileData['annual_income'] = args['annual_income']
 		profileData['dob'] = args['dob']
-		profileData['status'] = args['status']
+
 
 		#Call Pratiks Method
-		response = createProfile(profileData)
+		response = procs.createUpdateStudentProfile(profileData)
 		return response,200
 	
-def createProfile(StudentProfileData):
-	#SQL Query: dbResponse=Query
-	dbResponse = StudentProfileData
-	return dbResponse
+# def createProfile(StudentProfileData):
+# 	#SQL Query: dbResponse=Query
+# 	dbResponse = StudentProfileData
+# 	return dbResponse
 
 #Get Parameters & Parse JSON
 #json_data = request.get_json(force=True)

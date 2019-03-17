@@ -1,6 +1,7 @@
 from flask_restful import Resource
 from flask_restful import reqparse, abort, Api, Resource
 import logging as logger
+import procs
 
 class verifyStudentProfile(Resource):
 
@@ -21,13 +22,3 @@ class verifyStudentProfile(Resource):
 		sid = args["uname"]
 		v_status = args["v_status"]
 
-		#Call Pratiks Method
-		response = verifyScholarshipDB(sid,v_status)
-		return response,200
-	
-def verifyScholarshipDB(uname,v_status):
-	#SQL Query: dbResponse=Query
-	dbResponse = {}
-	dbResponse["uname"] = uname
-	dbResponse["v_status"] = v_status
-	return dbResponse

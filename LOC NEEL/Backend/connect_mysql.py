@@ -14,6 +14,8 @@ def getDBCursor(proc, param_tup=None):
     else:
         args = cursor.callproc(proc)
 
+    db.commit()
+
     z = []
 
     for result in cursor.stored_results():
