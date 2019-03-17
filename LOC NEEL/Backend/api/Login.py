@@ -22,15 +22,15 @@ class Login(Resource):
 		un = args['username']
 		pw = args['password']
 
-		logger.debug("Username: "+un+"Password: "+pw)
+		logger.debug("---------------------Username: "+un+"Password: "+pw)
 
 		#Call Pratiks Method
 		dbResponse = procs.check_credentials(un,pw)
-		if(dbResponse["status"]):
-			response = {"message":"true", "userID":str(dbResponse["userID"]), "type":dbResponse["type"]}
-		else:
-			response = {"message":"false", "userID":"", "type":""}
-		return response,200
+		# if(dbResponse["status"]):
+		# 	response = {"message":"true", "userID":str(dbResponse["userID"]), "type":dbResponse["type"]}
+		# else:
+		# 	response = {"message":"false", "userID":"", "type":""}
+		return dbResponse,200
 
 #Get Parameters & Parse JSON
 #json_data = request.get_json(force=True)

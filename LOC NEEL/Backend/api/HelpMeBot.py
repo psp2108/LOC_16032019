@@ -11,10 +11,11 @@ from flask_restful import reqparse, abort, Api, Resource
 import logging as logger
 # [---------------------------------------END IMPORTING LIBRARIES-------------------------------------]
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = u"D:/LOC/Backend/api/HelpMeBot_Secret.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = u"E:/Project/LOC 2019/LOC_16032019/LOC NEEL/Backend/api/HelpMeBot_Secret.json"
 
 class HelpMeBot(Resource):
 	def get(self,question,UserId):
+		question = question.replace("-", " ")
 		answer = getAnswer(question,UserId)
 		if(answer!=""):
 			response = {"status":True, "answer":answer}
