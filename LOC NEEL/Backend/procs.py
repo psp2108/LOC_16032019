@@ -8,10 +8,10 @@ def check_credentials(un,pw):
     d["userID"] = un
 
     if (o[0][0] == 'false'):
-        d["type"] = ''
+        d["type_s"] = ''
         d["status"] = False
     else:
-        d["type"] = o[0][1]
+        d["type_s"] = o[0][1]
         d["status"] = True
 
     return d
