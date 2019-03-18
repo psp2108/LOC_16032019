@@ -590,7 +590,7 @@ BEGIN
 
 END //
 
-call view_scholarships(5)
+#call view_scholarships(5)
 
 ##### GET SCHOLARSHIP
 
