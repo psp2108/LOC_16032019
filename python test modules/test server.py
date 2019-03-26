@@ -1,10 +1,14 @@
 from flask import Flask
+from flask import jsonify
+import json
+
+pin_status = {'switch1':0, 'switch2':0, 'switch3':0, 'gas_leakage':0}
 
 app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return "This is homepage"
+    return jsonify(pin_status)
 
 @app.route('/test')
 def test():
