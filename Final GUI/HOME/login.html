@@ -1,0 +1,149 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<link rel="stylesheet" type="text/css" href="https://bootswatch.com/4/litera/bootstrap.min.css">
+<link rel="shortcut icon" type="image/png" href="/RefreadBotNeel/favicon.png"/>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="css/chatbot.css">
+<title>Login Page</title>
+<style> 
+.shadowBox {
+    border-radius: 25px;
+    border: 1px solid;
+    padding: 1	0px;
+    box-shadow: 9px 9px 10px -6px rgba(0,0,0,0.74);
+}
+.ChatBotButton {
+    position:relative;
+    margin-top:100%;
+    left:20%;
+    }
+</style>
+
+</head>
+
+<body>
+
+<div class="shadowBox blockquote text-center" onmouseover="dynamicMouseIn(this)" onmouseout="dynamicMouseOut(this)" id="example1">
+    <p><h1>Login Page</h1></p>
+</div>
+<div class="shadowBox jumbotron" id="example2" onmouseover="dynamicMouseIn(this)" onmouseout="dynamicMouseOut(this)">
+    <form method="POST" action="--WEBBOT-SELF--">
+    	<p align="center">&nbsp;</p>
+
+    	<h6>
+    	    <p align="center" >USERNAME 	 <input type="text" class="control-label" id="uname" name="T1" size="20"></p>
+        </h6>
+    
+    	<h6>
+    	    <p align="center" >PASSWORD <input type="password" class="control-label" id="pass" name="T2" size="20"></p>
+        </h6>
+    	
+    	<p align="center">&nbsp;</p>
+    	
+    	<p align="center" class="lead"><input type=button value="Login" class="btn btn-outline-secondary" onclick=chklogin() id="loginbutton" name="B1">
+    	</p>
+
+	</form>
+</div>
+
+<script>
+
+    function register()
+    {
+        document.getElementById('link1').href="register.htm"
+    }
+
+    function dynamicMouseIn()
+    {
+        document.getElementById('example1').className= 'shadowBox blockquote text-center';
+        document.getElementById('example2').className= 'shadowBox jumbotron';
+    }
+
+    function dynamicMouseOut()
+    {
+        document.getElementById('example1').className= 'blockquote text-center';
+        document.getElementById('example2').className= 'jumbotron';
+    }
+
+    function chklogin()
+    {   
+        var uname = document.getElementById("uname").value;
+    	var pass = document.getElementById("pass").value;
+    	var requestData = "username="+uname+"&password="+pass;	
+    			
+    	postAjax("https://a7626729.ngrok.io/api/v1/login", requestData, function(data){verifyUserResult(data)});
+    }
+
+    function verifyUserResult(response)
+    {
+        response = JSON.parse(response);
+        if(response.message)
+        {
+            alert("Login Successful. Redirecting You...");
+            if(response.type == 0)
+            {
+                localStorage.setItem('user_id', response.userID);
+                top.location.href = "http://localhost/final/STUDENT/studentlanding.html";
+            }
+            else if(response.type == 1)
+            {
+                localStorage.setItem('user_id', response.userID);
+                top.location.href = "http://localhost/final/ORG/organizerlanding.html";
+            }
+            else if(response.type == 1)
+            {
+                localStorage.setItem('user_id', response.userID);
+                top.location.href = "http://localhost/final/OPERATOR/operatorlanding.html";
+            }
+        }
+        else
+        {
+            alert("Login Unsucessful. \n Possible Reasons:: \n [1]. You haven't registered\n [2]. You entered wrong details");
+        }
+            
+    }
+
+    function postAjax(url, data, success) 
+    {
+        var params = data;
+        var xhr = new XMLHttpRequest();	    
+        xhr.onreadystatechange = function() {
+    		        if (xhr.readyState>3 && xhr.status==200) 
+    		        	{ success(xhr.responseText); }
+    		    };
+        xhr.open('POST', url);
+        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send(params);
+        return xhr;
+    }
+
+    function setCookie(name,value,days) {
+        var expires = "";
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days*24*60*60*1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "")  + expires + "; path=https://phtwebsite.000webhostapp.com";
+    }
+    function getCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0;i < ca.length;i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1,c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        }
+        return null;
+    }
+    function eraseCookie(name) {   
+        document.cookie = name+'=; Max-Age=-99999999;';  
+    }
+</script>
+</body>
+</html>

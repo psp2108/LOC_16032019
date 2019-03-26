@@ -1,0 +1,56 @@
+<html>
+
+<head>
+<link href="css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<!--  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>-->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>operator Buttons</title>
+<link rel = "icon" type = "image/png" href = "icon/icon.png">
+<link rel="stylesheet" type="text/css" href="css/1.css">
+
+<link rel="stylesheet" type="text/css" href="https://bootswatch.com/4/litera/bootstrap.min.css">
+
+<style>
+	.colorbutton{
+	background-color: #FFFFFF; color: black;
+	}
+</style>
+</head>
+
+<body>
+<form method="POST" action="--WEBBOT-SELF--">
+	<div id="example1">
+	<!--webbot bot="SaveResults" U-Fi le="fpweb:///_private/form_results.csv" S-Format="TEXT/CSV" S-Label-Fields="TRUE" -->
+	<center>
+	<p>&nbsp</p><p class="lead" ><input type=button class="colorbutton btn btn-primary btn-lg btn-block" onclick="parent.window.frames['content'].location = 'op_student.html'" value="Students " name="B3"></p>
+	<p class="lead"><input type=button class="colorbutton 	btn btn-primary btn-lg btn-block"	 onclick="parent.window.frames['content'].location = 'op_scholarship.html'" value="Scholarships" name="B4"></p>
+	<p class="lead"><input type=button class="colorbutton 	btn btn-primary btn-lg btn-block"	 onclick="parent.window.frames['content'].location = 'chatbot.html'" value="Need An Assistant ?" name="B5"></p></center>
+</div>
+</form>
+
+<script>
+	function chcvalue()
+	{
+		alert("Successful");
+	}
+
+
+  window.onload = function() {
+    var x = localStorage.getItem('user_id');
+    if (x) {
+        alert("Session Continue..[From Profile Frame]"+x.toString());
+        //getAjax("https://a7626729.ngrok.io/api/v1/GetProfile/", x, function(data){renderProfile(data)});
+    }
+    else
+    {
+        alert("Session Ended. Login Again Please!");
+        top.location.href = "http://localhost/final/HOME/main.html";
+    }
+};
+</script>
+</body> 	
+</html>

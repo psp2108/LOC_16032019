@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Registration</title>
+<style> 
+.shadowBox {
+    border-radius: 25px;
+    border: 1px solid;
+    padding: 1	0px;
+    box-shadow: 9px 9px 10px -6px rgba(0,0,0,0.74);
+}
+
+</style>
+</head>
+<link rel="stylesheet" type="text/css" href="https://bootswatch.com/4/litera/bootstrap.min.css">
+
+<body>
+<div class="shadowBox blockquote text-center" id="example1" onmouseover="dynamicMouseIn(this)" onmouseout="dynamicMouseOut(this)">
+<p><h1>Registration Form</h1></p></div>
+<div class="shadowBox jumbotron" id="example2" onmouseover="dynamicMouseIn(this)" onmouseout="dynamicMouseOut(this)">
+<form method="POST" action="--WEBBOT-SELF--">
+	<!--webbot bot="SaveResults" U-File="fpweb:///_private/form_results.csv" S-Format="TEXT/CSV" S-Label-Fields="TRUE" -->
+
+	<h6><p align="center" >NAME &nbsp &nbsp &nbsp &nbsp<input type="text" class="control-label" name="T1" id="name" size="20"></p></h6>	
+	<h6><p align="center" >USERNAME <input type="text" class="control-label" name="T2" id="uname" size="20"></p></h6>
+	<h6><p align="center" >EMAIL-ID &nbsp <input type="text" class="control-label" name="T5" id="email" size="20"></p></h6>
+	<h6><p align="center" >PASSWORD <input type="password" class="control-label" name="T3" id="pass" size="20"></p></h6>
+	<h6><p align="center" >CONFIRM PASSWORD <input type="password" class="control-label" id="cpass" name="T4" size="20"></p></h6>
+	<h6><p align="center" >PHONE NO<input type="text" class="control-label" name="T6" id="phone" size="20"></p></h6>
+	<div class="row">
+     <div class="col-xs-2 mx-auto">
+      <h6><p  align="center" >TYPE OF USER<select id="typeselect" class="custom-select" size="1" name="D1"></h6>
+	<option  value="Student" selected>Student</option>
+	<option value="Organizer" >Organizer</option>
+	<option value="Operator" >Operator</option>
+	</select></p>
+     </div>
+	</div>
+	
+	<h6><p align="center" >GENDER
+	<input type="radio" value="Male" id="male" checked name="R1">MALE <input type="radio" id="female" value="Female"  name="R1">FEMALE</p></h6>
+
+	<h6><p align="center" ><a id="link1"><input type="button"  class="btn btn-outline-secondary"  value="Register Me!" onclick="sendOTPNow()" name="B1"></a></p></h6>
+</form>
+</div>
+</body>>
+
+<script>
+
+
+function dynamicMouseIn()
+{
+    document.getElementById('example1').className= 'shadowBox blockquote text-center';
+    document.getElementById('example2').className= 'shadowBox jumbotron';
+    //document.getElementById('idOfElement').classList.add('newClassName');
+}
+
+function dynamicMouseOut()
+{
+    document.getElementById('example1').className= 'blockquote text-center';
+    document.getElementById('example2').className= 'jumbotron';
+    //document.getElementById('idOfElement').classList.add('newClassName');
+}
+
+function postAjax(url, data, success) 
+{
+    console.log("Entered AJAX");
+    var params = data;
+    var xhr = new XMLHttpRequest();     
+    xhr.onreadystatechange = function() {
+                if (xhr.readyState==4 && xhr.status==200) 
+                    { success(xhr.responseText); }
+            };
+    xhr.open('POST', url);
+    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.send(params);
+    return xhr;
+}
+
+function register()
+{   
+    var name=document.getElementById('name').value;
+    var uname=document.getElementById('uname').value;
+    var email=document.getElementById('email').value;
+    var pass=document.getElementById('pass').value;
+    var cpass=document.getElementById('cpass').value;
+    var typeselect=document.getElementById('typeselect').value;
+    var phone=document.getElementById('phone').value;
+    var gender=document.getElementById('male').checked?"Male":"Female";
+    var requestData="username="+uname+"&password="+pass+"&name="+name+"&type="+typeselect+"&gender="+gender+"&email="+email+"&phone="+phone;    
+    postAjax("https://a7626729.ngrok.io/api/v1/register", requestData, function(data){registerResult(data)});
+}
+
+function registerResult(response)
+{
+    response = JSON.parse(response);
+    if(response.reg_status)
+    {
+        alert("Register Successful! Now try logging in");
+    }
+    else
+    {
+        alert("Register Unsucessful. \n Possible Reasons:: \n[1]. Server Issues\n[2]. You entered wrong details");
+    }
+        
+}
+
+function sendOTPNow()
+{
+    var email = "email="+document.getElementById("email").value;
+    postAjax("https://a7626729.ngrok.io/api/v1/SendEmail", email, function(data){verifyOTP(data)});
+}
+
+function verifyOTP(data)
+{
+    console.log("Entered Verify OTP");
+    var otp = prompt("Enter the OTP you received on Email", "");
+    data = JSON.parse(data);
+    if(data.req_status == "1")
+    {
+        alert("OTP Send Successfully");
+        if (otp == data.OTP) 
+        {
+            alert("Registering You!!");
+            register();
+        } 
+        else 
+        {
+            alert("Wrong OTP");
+        }
+    }
+    else
+    {
+        alert("OTP Wasnt Send Successfully. Try Again Later");
+    }
+    
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,255 @@
+<html>
+
+<head>
+<link href="file:///F:/LoC/New%20folder/Demo1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<!--  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>-->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Change Photo</title>
+<link rel="stylesheet" type="text/css" href="css/1.css">
+
+</head>
+
+<body onload="f1()">
+<div class="container emp-profile">
+            <form method="post">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-img">
+                            <div>
+                              </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="profile-head">
+                                    <h5>
+                                        Create Scholarship
+                                    </h5>
+                                    <h6>
+                                        
+                                    </h6>
+                                    <p class="proile-rating"><span></span></p>
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="button" class="profile-edit-btn" name="btnAddMore" onclick="sub()" value="submit"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-work">
+                                                   </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="tab-content profile-tab" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                        <div class="row" >
+                                            <div class="col-md-6">
+                                                <label>Scholarship Name:</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><INPUT TYPE="text" id="name" NAME="uid" style="border:none"  placeholder="Scholarship Name"></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Last Date to apply:</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><INPUT id="date" type=date  NAME="uid" style="border:none"></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Scholarship URL:</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><INPUT id="url" type=url placeholder="Scholarship Name" NAME="uid" style="border:none"></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Type of Scholarship:</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><select size="1" id="category" name="D1">
+													
+													<option value="1" onclick="f1();f2()">Financial Need</option>
+													<option value="2" onclick="f1();f3()">Backward Classes</option>
+													<option value="3" onclick="f1();f4()">Academics</option>
+													<option value="4" onclick="f1();f5()">Other</option>
+	
+													</select></p>
+                                            </div>
+                                        </div>
+                                        <div class="row" id="1" style="">
+                                        <div class="col-md-6">
+                                                <label>Annual income:</label>
+                                            </div>
+                                            <div class="col-md-6" >
+                                                <p><INPUT TYPE="text" id="annualIncome" NAME="uid" style="border:none"  placeholder="Annual Income"></p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row" id="2">
+                                        <div class="col-md-6">
+                                                <label>Select Caste:</label>
+                                            </div>
+                                            <div class="col-md-6" >
+                                                <p><select size="1" id="caste" name="D2">
+														<option selected value="0"></option>
+													</select></p>
+                                            </div>
+                                        </div>
+                                        <div id="3">
+                                        <div class="row" >
+                                        <div class="col-md-6">
+                                                <label>Select minimum qualification:</label>
+                                            </div>
+                                            <div class="col-md-6" >
+                                                <p><select size="1" id="qual" name="D2">
+													<option selected value="0"></option>
+													</select></p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row" >
+                                        <div class="col-md-6">
+                                                <label>Enter Score:</label>
+                                            </div>
+                                            <div class="col-md-6" >
+                                                <p><INPUT TYPE="text" id="score" NAME="uid" style="border:none"  placeholder="Score"></p>
+                                            </div>
+                                        </div>
+                                        
+										<div class="row" >
+                                        <div class="col-md-6">
+                                                <label>Select course:</label>
+                                            </div>
+                                            <div class="col-md-6" >
+                                                <p><select size="1" id="course" name="D3">
+													<option selected value="0"></option>
+													</select></p>
+                                            </div>
+
+                                        
+										</div>
+										
+										
+                                        <div class="row" id="4">
+                                        <div class="col-md-6">
+                                                <label>Select Event:</label>
+                                            </div>
+                                            <div class="col-md-6" >
+                                                <p><select size="1" id="event1" name="D2">
+													<option selected value="0"></option>
+													</select></p>
+                                            </div>
+                                        </div>
+
+
+                                        
+                                        
+                                        
+
+
+                                        
+                                                  
+                                      
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>           
+        </div>
+
+
+
+<script>
+
+function f1()
+{
+	
+	document.getElementById('annualIncome').disabled=true;
+	document.getElementById('caste').disabled=true;
+	document.getElementById('qual').disabled=true;
+	document.getElementById('score').disabled=true;
+	document.getElementById('course').disabled=true;	
+	document.getElementById('event1').disabled=true;
+
+}
+
+function f2()
+{
+	document.getElementById('annualIncome').disabled=false;
+}
+
+function f3()
+{
+	document.getElementById('caste').disabled=false;
+
+}
+
+function f4()
+
+{
+	document.getElementById('qual').disabled=false;
+	document.getElementById('score').disabled=false;
+	document.getElementById('course').disabled=false;
+
+}
+
+
+
+function f5()
+{
+	document.getElementById('event1').disabled=false;
+
+}
+function loaddiv()
+	{
+		
+		var x=document.getElementById('category').value;
+		
+		
+	}
+
+function fetch()
+{
+	var category=document.getElementById('category').value;
+	var name=document.getElementById('name').value;
+	var date=document.getElementById('date').value;
+	var url=document.getElementById('url').value;
+	var annualIncome=document.getElementById('annualIncome').value;
+	var caste=document.getElementById('caste').value;
+	var qual=document.getElementById('qual').value;
+	var score=document.getElementById('score').value;
+	var course=document.getElementById('course').value;
+	var event1=document.getElementById('event1').value;
+	
+	var finalPostData="category="+category+"&name="+name+"&date="+date+"&url="+url+"&annualIncome="+annualIncome+"&caste="+caste+"&qual="+qual+"&score="+score+"&course="+course+"&event="+event1;
+	alert(finalPostData);
+
+}
+
+function sub()
+{
+
+fetch();
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Organization Landing</title>
+<link rel = "icon" type = "image/png" href = "icon/icon.png">
+
+<!-- <style>
+	iframeoverflow{
+    overflow:hidden;
+}
+</style> -->
+
+</head>
+<link rel="stylesheet" type="text/css" href="https://bootswatch.com/4/litera/bootstrap.min.css">
+<body>
+<div class="blockquote text-center">
+    <p><h1><img src="icon/logo.png" alt="Sorry" width=80px;height=80px;>Scholarship portal</h1></p>
+<p><h5>Organization Landing</h5></p></div>
+
+<iframe  style="border:none; background:#00FFFF" scrolling="no" src="orgbutton.html" width="24%"  height="100%"></iframe>
+<iframe  name='content' style="border:none; background:#00FFFF" scrolling="no" src="orgview.htm" width=75%  height="100%"></iframe>
+
+</body>
+<script>
+window.onload = function() {
+    var x = localStorage.getItem('user_id');
+    if (x) {
+        alert("Session Continue..[From Profile Frame]"+x.toString());
+        //getAjax("https://a7626729.ngrok.io/api/v1/GetProfile/", x, function(data){renderProfile(data)});
+    }
+    else
+    {
+        alert("Session Ended. Login Again Please!");
+        top.location.href = "http://localhost/final/HOME/main.html";
+    }
+};
+</script>
+</html>

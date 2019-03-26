@@ -1,0 +1,218 @@
+<html>
+
+<head>
+<link href="css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<!--  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>-->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Change Photo</title>
+<link rel = "icon" type = "image/png" href = "icon/icon.png">
+<link rel="stylesheet" type="text/css" href="css/1.css">
+</head>
+
+<body>
+<div class="container emp-profile">
+             <form method="post">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-img">
+                            <div>
+                              </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="profile-head">
+                                    <h5>
+                                        Student profile
+                                    </h5>
+                                    <h6>
+                                        
+                                    </h6>
+                                    <p class="proile-rating"><span></span></p>
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <input type=button class="profile-edit-btn" name="btnAddMore" onclick=chkprofile() value="submit">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-work">
+                                                   </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="tab-content profile-tab" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                        <div class="row" >
+                                            <div class="col-md-6">
+                                                <label>User Id</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><INPUT TYPE="text" id="username" NAME="uid" style="border:none"  placeholder="Username"></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Name</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><INPUT TYPE="text" id="name" placeholder="Name" NAME="uid" style="border:none"></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Email</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><INPUT TYPE="text" id="email" placeholder="Email" NAME="uid" style="border:none"></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Phone</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><INPUT TYPE="text"  id="phone" placeholder="Phone no." NAME="uid" style="border:none"></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Physical Disability</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><INPUT TYPE="text" id="pd" placeholder="Disablility" NAME="uid" style="border:none"></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Course</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><INPUT TYPE="text" id="course" placeholder="course" NAME="uid" style="border:none"></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Adhar Card</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><INPUT TYPE="text" id="adhar" placeholder="Aadhaar no." NAME="uid" style="border:none"></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>City</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><INPUT TYPE="text" id="city" placeholder="City" NAME="uid" style="border:none"></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Caste</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><INPUT TYPE="text" id="caste" placeholder="Caste" NAME="uid" style="border:none"></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Annual Income</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><INPUT TYPE="text" NAME="uid" id="annual_income" placeholder="Annual Income" style="border:none"></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Date of Birth</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><INPUT TYPE="date" NAME="uid" id="dob" placeholder="DOB" style="border:none"></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Hobbies</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><select size="1" id="hobbies" placeholder="Hobbies" style="border:none"><option selected value="0"></option></select></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Skills</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><select size="1" id="skills" placeholder="Skills" style="border:none"><option selected value="0"></option></select></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Resume Link:</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><INPUT TYPE="url" NAME="uid" id="resume" placeholder="Resume" style="border:none"></p>
+                                            </div>
+                                       </div>
+                                            <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Caste Certificate Link:</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><INPUT TYPE="url" NAME="uid" id="caste_cert" placeholder="Caste Certificate" style="border:none"></p>
+                                            </div></div>
+                                                                                        
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>                
+        </div>
+<script type="text/javascript">
+    
+function fetch()
+{
+    var username=document.getElementById('username').value;
+    var name=document.getElementById('name').value;
+    var email=document.getElementById('email').value;
+    var phone=document.getElementById('phone').value;
+    var pd=document.getElementById('pd').value;
+    var course=document.getElementById('course').value;
+    var adhar=document.getElementById('adhar').value;
+    var city=document.getElementById('city').value;
+    var caste=document.getElementById('caste').value;
+    var annual_income=document.getElementById('annual_income').value;
+    var dob=document.getElementById('dob').value;
+    var hobbies=document.getElementById('hobbies').value;
+    var skills=document.getElementById('skills').value;
+    var resume=document.getElementById('resume').value;
+    var caste_cert=document.getElementById('caste_cert').value;
+    var final="username="+username+"&name="+name+"&email="+email+"&phone="+phone+"&pd="+pd+"&course="+course+"&adhar="+adhar+"&city="+city+"&caste="+caste+"&annual_income="+annual_income
+    +"&dob="+dob+"&hobbies="+hobbies+"&skills="+skills+"&resume="+resume+"&caste_cert="+caste_cert; 
+    alert(final);
+    
+}
+
+function chkprofile()
+{fetch();}
+
+</script>
+
+</body>
+
+
+
+</html>
