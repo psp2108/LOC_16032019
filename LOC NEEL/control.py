@@ -36,6 +36,7 @@ def indicateStart(led):
 
 from flask import Flask
 from flask import jsonify
+import json
 # import RPi.GPIO as GPIO
 import threading
 import time
@@ -70,10 +71,16 @@ gasRead.start()
 
 app = Flask(__name__)
 
-@app.route('/')
+@app.route('/', methods=['GET'])
 def index():
         # return "Showing Status"
-	return jsonify(pin_status)
+	dd = json.dumps(pin_status)
+	print(type(dd))
+	print(dd)
+	response = app.response_class(response=dd,status=200,mimetype='application/json')
+	response.headers.add('Access-Control-Allow-Origin', '*')
+	return response
+	# return dd
 
 @app.route('/switch1/<int:state>')
 def switch1(state):
