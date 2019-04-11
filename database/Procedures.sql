@@ -186,9 +186,32 @@ BEGIN
 
     select "True";
 
-END //
+    END //
 
 #call update_student("pratiksp","Pratik Panchal","10","Male",NULL,4,"998877665544",2,2,"C:/Caste Certificate","C/Resume","C:/Income Certificate",500000,"1998-08-21");
+
+####### ADD QUALIFICATION ###########
+DELIMITER //
+CREATE OR REPLACE PROCEDURE add_qualification(
+    IN _uid varchar(12),
+    IN _qualification int,
+    IN institute varchar(1000),
+    IN other_achievement varchar(1000),
+    IN score int,
+    IN certificate varchar(1000)
+)
+
+BEGIN
+
+	DECLARE student_id int;
+    
+    set student_id = (select student_user from login_table where user_id = _uid);
+
+	INSERT INTO map_qualifications (qualification_id, institute_or_name, other_achievement, student_id, total_score, certificate_path) VALUES (_qualification,institute,other_achievement,student_id,score,certificate);
+    
+    
+END //
+#call add_qualification(_uid,_qualification,institute,other_achievement,score,_certificate)
 
 ####### ADD STUDENT HOBBIES #########
 
@@ -703,5 +726,20 @@ BEGIN
 
 END //
 
-call get_scholarship(14);
+#call get_scholarship(14);
 
+
+####################################################
+
+##### GET ELIGIBLE STUDENTS
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE get_eligible(
+IN sch_id int
+)
+
+BEGIN
+
+END //
+
+#call get_eligible(14);
