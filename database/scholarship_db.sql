@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 15, 2019 at 08:45 PM
+-- Generation Time: Apr 15, 2019 at 09:02 PM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.4
 
@@ -362,8 +362,12 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `inspect_scholarship` (IN `id` INT, 
 
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `inspect_student` (IN `id` INT, IN `_status` INT)  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `inspect_student` (IN `sid` VARCHAR(12), IN `_status` INT)  BEGIN
 
+	DECLARE id int;
+    
+    set id = (select student_user from login_table where user_id = sid);
+    
 	update student_profile set status = _status where student_id = id;
     select "True";
 
@@ -1215,7 +1219,7 @@ CREATE TABLE `student_profile` (
 INSERT INTO `student_profile` (`student_id`, `name`, `gender`, `age`, `physical_disability`, `course`, `total_hobbies`, `total_skills`, `adhar_number`, `city`, `caste`, `caste_certificate`, `resume_path`, `annual_income`, `income_certificte_path`, `dob`, `status`) VALUES
 (23, 'Prem Bhajaj', 'Female', 15, NULL, 8, NULL, NULL, '909930022832', 20, 4, NULL, 'c:/resume1001', 854049, 'c:/income1001', '1994-08-28', 1),
 (24, 'Allison', 'Male', 28, NULL, 9, NULL, NULL, '925917147404', 23, 2, NULL, 'c:/resume1002', 650736, 'c:/income1002', '2001-03-27', 1),
-(25, 'Arthur', 'Female', 22, NULL, 2, NULL, NULL, '734726144245', 18, 5, NULL, 'c:/resume1003', 400420, 'c:/income1003', '2001-08-09', 1),
+(25, 'Arthur', 'Female', 22, NULL, 2, NULL, NULL, '734726144245', 18, 5, NULL, 'c:/resume1003', 400420, 'c:/income1003', '2001-08-09', 2),
 (26, 'Ana', 'Male', 24, NULL, 8, NULL, NULL, '965864334272', 18, 1, NULL, 'c:/resume1004', 920129, 'c:/income1004', '2001-01-28', 1),
 (27, 'Alex', 'Female', 16, NULL, 5, NULL, NULL, '754828832282', 24, 4, NULL, 'c:/resume1005', 323977, 'c:/income1005', '1995-07-13', 1),
 (28, 'Arlene', 'Male', 20, NULL, 9, NULL, NULL, '436067890220', 20, 5, NULL, 'c:/resume1006', 497210, 'c:/income1006', '1999-10-15', 1),
