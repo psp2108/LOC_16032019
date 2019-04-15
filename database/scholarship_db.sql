@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 15, 2019 at 09:02 PM
+-- Generation Time: Apr 15, 2019 at 09:11 PM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.4
 
@@ -354,6 +354,17 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `get_skills` ()  BEGIN
 	SELECT * FROM master_skill;
 
 END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_students` ()  NO SQL
+select 
+student_profile.name,
+login_table.user_id,
+login_table.email,
+login_table.phone_no
+
+from student_profile, login_table 
+where 
+login_table.student_user = student_profile.student_id$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `inspect_scholarship` (IN `id` INT, IN `_status` INT)  BEGIN
 
