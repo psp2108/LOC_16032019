@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 11, 2019 at 02:01 PM
+-- Generation Time: Apr 15, 2019 at 08:45 PM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.4
 
@@ -162,14 +162,59 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `get_eligible_scholarships` (IN `_ui
     map_qualifications.qualification_id = master_qualification.qualification_id AND
     map_qualifications.student_id = student_profile.student_id AND
     eligibility_criteria.qualification_score is not NULL and
-    eligibility_criteria.qualification_score != 0 and
+    eligibility_criteria.qualification_score != 0 and  
     eligibility_criteria.qualification_score <= map_qualifications.total_score)) and
+    
+   	master_scholarship.scholarship_id = scholarship_table.scholarship and
     
     student_profile.student_id = student_id and
     eligibility_criteria.scholarship = master_scholarship.scholarship_id AND
     eligibility_criteria.organization = organization_profile.organization_id AND
+    
     master_scholarship.category = master_sc_category.category_id 
        
+    group by eligibility_criteria.criteria_id;
+	
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_eligible_students` (IN `_oid` VARCHAR(12))  BEGIN
+	DECLARE organizer_id int;
+    
+    
+    set organizer_id = (select organizer_user from login_table where user_id = _oid);
+
+    
+    select 
+        student_profile.student_id,
+        student_profile.name,
+        student_profile.status,
+        login_table.user_id
+
+    from 
+    eligibility_criteria,master_scholarship,organization_profile,student_profile,
+    master_qualification,map_qualifications, master_sc_category, scholarship_table, login_table
+    WHERE
+    ((eligibility_criteria.annual_income >= student_profile.annual_income AND
+    eligibility_criteria.annual_income is not NULL and
+    eligibility_criteria.annual_income != 0) or
+     
+    (eligibility_criteria.caste = student_profile.caste) or
+     
+    (eligibility_criteria.upcomming_course = student_profile.course) or 
+     
+    (eligibility_criteria.qualification = master_qualification.qualification_id AND
+    map_qualifications.qualification_id = master_qualification.qualification_id AND
+    map_qualifications.student_id = student_profile.student_id AND
+    eligibility_criteria.qualification_score is not NULL and
+    eligibility_criteria.qualification_score != 0 and
+    eligibility_criteria.qualification_score <= map_qualifications.total_score)) and
+    
+    organization_profile.organization_id = organizer_id and
+    eligibility_criteria.scholarship = master_scholarship.scholarship_id AND
+    eligibility_criteria.organization = organization_profile.organization_id AND
+    master_scholarship.category = master_sc_category.category_id and
+    login_table.student_user = student_profile.student_id
+    
     group by eligibility_criteria.criteria_id;
 	
 END$$
@@ -440,33 +485,42 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `update_student` (IN `_uid` VARCHAR(
     
     set student_id = (select student_user from login_table where user_id = _uid);
     
-    update student_profile set
-    name = _name,
-    age = _age,
-    gender = _gender,
-    physical_disability = _physical_disability,
-    course = _course,
-    adhar_number = _adhar_card,
-    city = _city,
-    caste = _caste,
-    caste_certificate = caste_certificate,
-    resume_path = _resume_path,
-    annual_income = _annual_income,
-    student_profile.income_certificte_path = _income_certificate,
-    dob = _dob
-    where student_profile.student_id = student_id;
+    if (student_id is not NULL) and (student_id > 0) then
+    	
+        update student_profile set
+        name = _name,
+        age = _age,
+        gender = _gender,
+        physical_disability = _physical_disability,
+        course = _course,
+        adhar_number = _adhar_card,
+        city = _city,
+        caste = _caste,
+        caste_certificate = caste_certificate,
+        resume_path = _resume_path,
+        annual_income = _annual_income,
+        student_profile.income_certificte_path = _income_certificate,
+        dob = _dob
+        where student_profile.student_id = student_id;
 
-    select "True";
+    	select "True";
+     ELSE
+     	select "False";
+     end if;
 
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `view_scholarships` (IN `org_id` INT)  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `view_scholarships` (IN `org_id` VARCHAR(12))  BEGIN
 	
-    if (select count(*) from scholarship_table where scholarship_table.organization = org_id) > 0 then
+    DECLARE _id int;
+    
+    set _id = (select organizer_user from login_table where user_id = org_id);
+    
+    if (select count(*) from scholarship_table where scholarship_table.organization = _id) > 0 then
         select scholarship_table.name, scholarship_table.url_site from 
         organization_profile, scholarship_table where 
         scholarship_table.organization = organization_profile.organization_id AND
-        organization_profile.organization_id = org_id;
+        organization_profile.organization_id = _id;
     ELSE
     	select "";
     end if;
@@ -474,6 +528,57 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `view_scholarships` (IN `org_id` INT
 END$$
 
 DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `eligibility_criteria`
+--
+
+CREATE TABLE `eligibility_criteria` (
+  `criteria_id` int(11) NOT NULL,
+  `caste` int(11) DEFAULT NULL,
+  `qualification` int(11) DEFAULT NULL,
+  `qualification_score` int(11) DEFAULT NULL,
+  `annual_income` double DEFAULT NULL,
+  `events` int(11) DEFAULT NULL,
+  `organization` int(11) NOT NULL,
+  `scholarship` int(11) NOT NULL,
+  `upcomming_course` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `eligibility_criteria`
+--
+
+INSERT INTO `eligibility_criteria` (`criteria_id`, `caste`, `qualification`, `qualification_score`, `annual_income`, `events`, `organization`, `scholarship`, `upcomming_course`) VALUES
+(40, 6, NULL, NULL, NULL, NULL, 22, 29, NULL),
+(41, NULL, NULL, NULL, NULL, 8, 22, 30, NULL),
+(42, 2, NULL, NULL, NULL, NULL, 23, 31, NULL),
+(43, NULL, NULL, NULL, 500000, NULL, 23, 32, NULL),
+(44, NULL, NULL, NULL, NULL, 4, 23, 33, NULL),
+(45, NULL, 20, 61, NULL, NULL, 23, 34, NULL),
+(46, NULL, 21, 78, NULL, NULL, 23, 35, NULL),
+(47, NULL, 2, 57, NULL, NULL, 23, 36, NULL),
+(48, NULL, 16, 51, NULL, NULL, 23, 37, NULL),
+(49, NULL, 12, 65, NULL, NULL, 23, 38, NULL),
+(50, NULL, 5, 52, NULL, NULL, 23, 39, NULL),
+(51, NULL, NULL, NULL, 600000, NULL, 24, 40, NULL),
+(52, NULL, 11, 84, NULL, NULL, 24, 41, NULL),
+(53, NULL, NULL, NULL, NULL, 7, 24, 42, NULL),
+(54, 6, NULL, NULL, NULL, NULL, 25, 43, NULL),
+(55, NULL, NULL, NULL, 500000, NULL, 25, 44, NULL),
+(56, NULL, 16, 79, NULL, NULL, 25, 45, NULL),
+(57, NULL, 2, 58, NULL, NULL, 25, 46, NULL),
+(58, NULL, NULL, NULL, NULL, 5, 25, 47, NULL),
+(59, 2, NULL, NULL, NULL, NULL, 26, 48, NULL),
+(60, NULL, 6, 62, NULL, NULL, 26, 49, NULL),
+(61, NULL, 7, 95, NULL, NULL, 26, 50, NULL),
+(62, NULL, NULL, NULL, NULL, 7, 26, 51, NULL),
+(63, NULL, 14, 94, NULL, NULL, 27, 52, NULL),
+(64, 4, NULL, NULL, NULL, NULL, 27, 53, NULL),
+(65, NULL, NULL, NULL, NULL, 5, 27, 54, NULL),
+(66, NULL, NULL, NULL, 600000, NULL, 27, 55, NULL);
 
 -- --------------------------------------------------------
 
@@ -509,7 +614,8 @@ INSERT INTO `login_table` (`user_id`, `password`, `email`, `phone_no`, `token`, 
 ('stud_1003', '1003', 'Arthur@email.com', '7417668468', NULL, 25, NULL, NULL),
 ('stud_1004', '1004', 'Ana@email.com', '7002333834', NULL, 26, NULL, NULL),
 ('stud_1005', '1005', 'Alex@email.com', '7099225010', NULL, 27, NULL, NULL),
-('stud_1006', '1006', 'Arlene@email.com', '9814847105', NULL, 28, NULL, NULL);
+('stud_1006', '1006', 'Arlene@email.com', '9814847105', NULL, 28, NULL, NULL),
+('stud_hari', 'hari', 'projectlife1999@gmail.com', '8889366111', NULL, 29, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -734,6 +840,34 @@ INSERT INTO `master_city` (`city_id`, `Cities`) VALUES
 (35, 'Wardha'),
 (36, 'Latur'),
 (37, 'Wardha');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `master_course`
+--
+
+CREATE TABLE `master_course` (
+  `course_id` int(11) NOT NULL,
+  `main_course` varchar(1000) NOT NULL,
+  `sub_course` varchar(1000) NOT NULL,
+  `course_year` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `master_course`
+--
+
+INSERT INTO `master_course` (`course_id`, `main_course`, `sub_course`, `course_year`) VALUES
+(1, 'Degree', 'Computer Engineering', 1),
+(2, 'Degree', 'Computer Engineering', 2),
+(3, 'Degree', 'Computer Engineering', 3),
+(4, 'Degree', 'Computer Engineering', 4),
+(5, 'Diploma', 'Computer Engineering', 1),
+(6, 'Diploma', 'Computer Engineering', 2),
+(7, 'Diploma', 'Computer Engineering', 3),
+(8, 'Diploma', 'Computer Engineering', 4),
+(9, 'SSC', 'Maharashtra State Board', 10);
 
 -- --------------------------------------------------------
 
@@ -1084,11 +1218,24 @@ INSERT INTO `student_profile` (`student_id`, `name`, `gender`, `age`, `physical_
 (25, 'Arthur', 'Female', 22, NULL, 2, NULL, NULL, '734726144245', 18, 5, NULL, 'c:/resume1003', 400420, 'c:/income1003', '2001-08-09', 1),
 (26, 'Ana', 'Male', 24, NULL, 8, NULL, NULL, '965864334272', 18, 1, NULL, 'c:/resume1004', 920129, 'c:/income1004', '2001-01-28', 1),
 (27, 'Alex', 'Female', 16, NULL, 5, NULL, NULL, '754828832282', 24, 4, NULL, 'c:/resume1005', 323977, 'c:/income1005', '1995-07-13', 1),
-(28, 'Arlene', 'Male', 20, NULL, 9, NULL, NULL, '436067890220', 20, 5, NULL, 'c:/resume1006', 497210, 'c:/income1006', '1999-10-15', 1);
+(28, 'Arlene', 'Male', 20, NULL, 9, NULL, NULL, '436067890220', 20, 5, NULL, 'c:/resume1006', 497210, 'c:/income1006', '1999-10-15', 1),
+(29, 'Hari Shah', 'Male', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1);
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `eligibility_criteria`
+--
+ALTER TABLE `eligibility_criteria`
+  ADD PRIMARY KEY (`criteria_id`),
+  ADD KEY `caste` (`caste`),
+  ADD KEY `qualification` (`qualification`),
+  ADD KEY `events` (`events`),
+  ADD KEY `scholarship` (`scholarship`),
+  ADD KEY `organization` (`organization`),
+  ADD KEY `upcomming_course` (`upcomming_course`);
 
 --
 -- Indexes for table `login_table`
@@ -1145,6 +1292,12 @@ ALTER TABLE `master_caste`
 --
 ALTER TABLE `master_city`
   ADD PRIMARY KEY (`city_id`);
+
+--
+-- Indexes for table `master_course`
+--
+ALTER TABLE `master_course`
+  ADD PRIMARY KEY (`course_id`);
 
 --
 -- Indexes for table `master_event`
@@ -1227,6 +1380,12 @@ ALTER TABLE `student_profile`
 --
 
 --
+-- AUTO_INCREMENT for table `eligibility_criteria`
+--
+ALTER TABLE `eligibility_criteria`
+  MODIFY `criteria_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+
+--
 -- AUTO_INCREMENT for table `map_hobby`
 --
 ALTER TABLE `map_hobby`
@@ -1261,6 +1420,12 @@ ALTER TABLE `master_caste`
 --
 ALTER TABLE `master_city`
   MODIFY `city_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+
+--
+-- AUTO_INCREMENT for table `master_course`
+--
+ALTER TABLE `master_course`
+  MODIFY `course_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `master_event`
@@ -1326,11 +1491,22 @@ ALTER TABLE `scholarship_table`
 -- AUTO_INCREMENT for table `student_profile`
 --
 ALTER TABLE `student_profile`
-  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `eligibility_criteria`
+--
+ALTER TABLE `eligibility_criteria`
+  ADD CONSTRAINT `eligibility_criteria_ibfk_1` FOREIGN KEY (`caste`) REFERENCES `master_caste` (`caste_id`),
+  ADD CONSTRAINT `eligibility_criteria_ibfk_2` FOREIGN KEY (`qualification`) REFERENCES `master_qualification` (`qualification_id`),
+  ADD CONSTRAINT `eligibility_criteria_ibfk_3` FOREIGN KEY (`events`) REFERENCES `master_event` (`event_id`),
+  ADD CONSTRAINT `eligibility_criteria_ibfk_4` FOREIGN KEY (`scholarship`) REFERENCES `master_scholarship` (`scholarship_id`),
+  ADD CONSTRAINT `eligibility_criteria_ibfk_5` FOREIGN KEY (`organization`) REFERENCES `organization_profile` (`organization_id`),
+  ADD CONSTRAINT `eligibility_criteria_ibfk_6` FOREIGN KEY (`upcomming_course`) REFERENCES `master_course` (`course_id`);
 
 --
 -- Constraints for table `login_table`

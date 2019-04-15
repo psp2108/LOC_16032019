@@ -168,25 +168,30 @@ BEGIN
     
     set student_id = (select student_user from login_table where user_id = _uid);
     
-    update student_profile set
-    name = _name,
-    age = _age,
-    gender = _gender,
-    physical_disability = _physical_disability,
-    course = _course,
-    adhar_number = _adhar_card,
-    city = _city,
-    caste = _caste,
-    caste_certificate = caste_certificate,
-    resume_path = _resume_path,
-    annual_income = _annual_income,
-    student_profile.income_certificte_path = _income_certificate,
-    dob = _dob
-    where student_profile.student_id = student_id;
+    if (student_id is not NULL) and (student_id > 0) then
+    	
+        update student_profile set
+        name = _name,
+        age = _age,
+        gender = _gender,
+        physical_disability = _physical_disability,
+        course = _course,
+        adhar_number = _adhar_card,
+        city = _city,
+        caste = _caste,
+        caste_certificate = caste_certificate,
+        resume_path = _resume_path,
+        annual_income = _annual_income,
+        student_profile.income_certificte_path = _income_certificate,
+        dob = _dob
+        where student_profile.student_id = student_id;
 
-    select "True";
+    	select "True";
+     ELSE
+     	select "False";
+     end if;
 
-    END //
+END //
 
 #call update_student("pratiksp","Pratik Panchal","10","Male",NULL,4,"998877665544",2,2,"C:/Caste Certificate","C/Resume","C:/Income Certificate",500000,"1998-08-21");
 
@@ -743,3 +748,108 @@ BEGIN
 END //
 
 #call get_eligible(14);
+
+
+
+
+###################################################################################################################################
+################# GET ELIGIBLE STUDENTS ###################### 
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE get_eligible_students(
+IN _oid varchar(12)
+)
+
+BEGIN
+	DECLARE organizer_id int;
+	# DECLARE income double;
+    
+    
+    set organizer_id = (select organizer_user from login_table where user_id = _oid);
+
+    #1 Financial (get from stud table)
+    #2 Backward (get from stud table)
+    #3 Academics (get from stud table and map_qualification with qualifications)
+    #4 Others (map_events)
+    
+    select 
+    /*
+    	master_scholarship.scholarship_id,
+    	organization_profile.name,
+        master_sc_category.categories,
+        master_scholarship.scholarships,
+        scholarship_table.url_site,
+        scholarship_table.last_date_to_apply
+    */
+        student_profile.student_id,
+        student_profile.name,
+        student_profile.status,
+        login_table.user_id
+
+    from 
+    eligibility_criteria,master_scholarship,organization_profile,student_profile,
+    master_qualification,map_qualifications, master_sc_category, scholarship_table, login_table
+    WHERE
+        -- organization_profile.organization_id = organizer_id and
+
+        -- scholarship_table.organization = organization_profile.organizer_id and
+        -- scholarship_table.eligibility = eligibility_criteria.criteria_id and
+
+        -- (
+        --     (
+        --         student_profile.caste = eligibility_criteria.caste and 
+        --         eligibility_criteria.caste is not NULL and 
+        --         eligibility_criteria.caste != 0 
+        --     ) or
+        --     (
+        --         student_profile.annual_income <= eligibility_criteria.annual_income and 
+        --         eligibility_criteria.annual_income is not NULL and
+        --         eligibility_criteria.annual_income != 0
+        --     ) or
+        --     (
+        --         eligibility_criteria.upcomming_course = student_profile.course and 
+        --         eligibility_criteria.upcomming_course is not NULL and 
+        --         eligibility_criteria.upcomming_course != 0 
+        --     ) or
+        --     (
+        --         student_profile.student_id = map_qualifications.student_id and
+        --         eligibility_criteria.qualification = map_qualifications.qualification_id and
+        --         eligibility_criteria.qualification is not NULL and 
+        --         eligibility_criteria.qualification != 0 and
+
+        --         eligibility_criteria.qualification_score <= map_qualifications.total_score and
+        --         eligibility_criteria.qualification_score is not NULL and 
+        --         eligibility_criteria.qualification_score != 0 
+        --     )
+        -- )
+
+
+
+    ((eligibility_criteria.annual_income >= student_profile.annual_income AND
+    eligibility_criteria.annual_income is not NULL and
+    eligibility_criteria.annual_income != 0) or
+     
+    (eligibility_criteria.caste = student_profile.caste) or
+     
+    (eligibility_criteria.upcomming_course = student_profile.course) or 
+     
+    (eligibility_criteria.qualification = master_qualification.qualification_id AND
+    map_qualifications.qualification_id = master_qualification.qualification_id AND
+    map_qualifications.student_id = student_profile.student_id AND
+    eligibility_criteria.qualification_score is not NULL and
+    eligibility_criteria.qualification_score != 0 and
+    eligibility_criteria.qualification_score <= map_qualifications.total_score)) and
+    
+   # student_profile.student_id = student_id and
+    organization_profile.organization_id = organizer_id and
+    eligibility_criteria.scholarship = master_scholarship.scholarship_id AND
+    eligibility_criteria.organization = organization_profile.organization_id AND
+    master_scholarship.category = master_sc_category.category_id and
+    login_table.student_user = student_profile.student_id
+   # master_scholarship.scholarship_id = scholarship_table.scholarship
+    
+    group by eligibility_criteria.criteria_id;
+	
+END //
+
+#call get_eligible_students("org_1012");

@@ -37,7 +37,10 @@ def register_student(data):
 
 def get_eligible_scholarships(uid):
     print("Calling Get Scholarship Procedure")
-    o = connect_mysql.getDBCursor("get_eligible_scholarships",(uid,))
+    try:
+        o = connect_mysql.getDBCursor("get_eligible_scholarships",(uid,))
+    except:
+        pass
 
     # d = {}
 	# master_scholarship.scholarship_id,
@@ -48,15 +51,27 @@ def get_eligible_scholarships(uid):
     #     scholarship_table.last_date_to_apply
 
     l = []
-    for i in o:
+    if len(o) == 0:
         d = {}
-        d['ID'] = i[0]
-        d['Organization'] = i[1]
-        d['Scholarship Category'] = i[2]
-        d['Scholarship'] = i[3]
-        d['URL'] = i[4]
-        d['Last Date to Apply'] = str(i[5])
+        d['ID'] = 0
+        d['Organization'] = "Tata Scholarship"
+        d['Scholarship Category'] = " "
+        d['Name'] = "Ratan Tata"
+        d['url'] = "www.tatascholarship.com"
+        d['Last Date to Apply'] = "2020-01-01 00:00:00"
+        d['v_status'] = "P"
         l.append(d)
+    else:
+        for i in o:
+            d = {}
+            d['ID'] = i[0]
+            d['Organization'] = i[1]
+            d['Scholarship Category'] = i[2]
+            d['Name'] = i[3]
+            d['url'] = i[4]
+            d['Last Date to Apply'] = str(i[5])
+            d['v_status'] = "P"
+            l.append(d)
 
     print(l)
     return l
@@ -70,8 +85,11 @@ def createUpdateStudentProfile(data):
     print(l)
 
     o = connect_mysql.getDBCursor("update_student",(l))
-    return [{'Response':True}]
-
+    print("---",o)
+    print("---",o[0])
+    print("---",o[0][0])
+    return {"Response" : o[0][0]}
+    
 def inspect_scholership(id,status):
 
     o = connect_mysql.getDBCursor("inspect_scholarship",(id,status))
@@ -226,3 +244,43 @@ def get_scholarship(sih):
     
     return l
 
+def get_eligible_students(oid):
+    
+    print("Calling Get Student Procedure")
+    try:
+        o = connect_mysql.getDBCursor("get_eligible_students",(oid,))
+    except:
+        pass
+
+    # d = {}
+	# master_scholarship.scholarship_id,
+    # 	organization_profile.name,
+    #     master_sc_category.categories,
+    #     master_scholarship.scholarships,
+    #     scholarship_table.url_site,
+    #     scholarship_table.last_date_to_apply
+
+    l = []
+    if len(o) == 0:
+        d = {}
+        d['ID'] = 0
+        d['name'] = "Karan Sharma"
+        d['v_status'] = "P"
+        d['username'] = "karan_1000"
+        l.append(d)
+    else:
+        for i in o:
+            d = {}
+            d['ID'] = i[0]
+            d['name'] = i[1]
+            d['v_status'] = i[2]
+            d['username'] = i[3]
+            l.append(d)
+
+    print(l)
+    print(oid)
+
+    return l
+
+def has_created_profile(sid):
+    return {'status' : False}

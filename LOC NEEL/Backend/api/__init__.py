@@ -22,9 +22,13 @@ from .Hobby import Hobby
 from .Event import Event
 from .Course import Course
 from .City import City
+from .GetEligibleStudents import GetEligibleStudents
 from .Caste import Caste
+from .Home import Home
+from .HasCreatedProfile import HasCreatedProfile
 
 restServer = Api(flaskAppInstance)
+restServer.add_resource(Home, "/")
 restServer.add_resource(Task, "/api/v1/task")
 restServer.add_resource(Login, "/api/v1/login")
 restServer.add_resource(Register, "/api/v1/register")
@@ -46,5 +50,10 @@ restServer.add_resource(Event, "/api/v1/event")
 restServer.add_resource(Course, "/api/v1/course")
 restServer.add_resource(City, "/api/v1/city")
 restServer.add_resource(Caste, "/api/v1/caste")
-
 restServer.add_resource(SendEmail, "/api/v1/SendEmail")
+restServer.add_resource(GetEligibleStudents, "/api/v1/GetEligibleStudents/<string:oid>")
+restServer.add_resource(HasCreatedProfile, "/api/v1/hasCreatedProfile/<string:sid>")
+
+
+
+
